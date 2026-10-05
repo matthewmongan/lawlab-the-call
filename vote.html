@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Room 285 · The Call</title>
+<style>
+  html,body{margin:0;background:#000;color:#f90;font:20px/1.3 "Trebuchet MS",sans-serif}
+  main{padding:12px 12px 28px;max-width:560px;margin:0 auto}
+  h1{font-size:28px;letter-spacing:.14em;margin:4px 0}
+  .cite{color:#9cf;font-size:14px;letter-spacing:.06em;margin:0 0 8px}
+  .prompt{color:#fff;font-size:22px;margin:8px 0 12px}
+  button{display:flex;width:100%;margin:8px 0;padding:16px 14px;font:700 18px/1.25 "Trebuchet MS",sans-serif;text-align:left;border:0;border-radius:0 16px;color:#000}
+  button.ice{background:#99ccff}
+  button.gold{background:#ff9900}
+  button.peach{background:#ffcc99}
+  button.rose{background:#cc6666;color:#fff}
+  button.mine{outline:4px solid #fff}
+  button.key{box-shadow:inset 0 0 0 4px #000}
+  button:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<main>
+  <p class="cite">ROOM 285</p>
+  <h1>THE CALL</h1>
+  <p class="cite" id="wait">Waiting for the board.</p>
+  <p class="prompt" id="q"></p>
+  <p class="cite" id="cite"></p>
+  <div id="btns"></div>
+</main>
+<script>
+(function(){
+  var dev=localStorage.getItem("lawlab.device");
+  if(!dev){
+    dev=Math.random().toString(36).slice(2,10);
+    localStorage.setItem("lawlab.device", dev);
+  }
+  var mine="", pollId="";
+  function esc(s){
+    return String(s||"").replace(/[&<>"]/g, function(c){
+      if(c==="&") return "&"+"amp;";
+      if(c==="<") return "&"+"lt;";
+      if(c===">") return "&"+"gt;";
+      return "&"+"quot;";
+    });
+  }
+  function paint(poll){
+    var wait=document.getElementById("wait");
+    var q=document.getElementById("q");
+    var cite=document.getElementById("cite");
+    var box=document.getElementById("btns");
+    if(!poll||!(poll.prompt||(poll.items&&poll.items.length))){
+      wait.textContent="Waiting for the board.";
+      q.textContent="";
+      cite.textContent="";
+      box.innerHTML="";
+      pollId="";
+      return;
+    }
+    if(poll.id!==pollId){ pollId=poll.id; mine=(poll.votes&&poll.votes[dev])||""; }
+    else mine=(poll.votes&&poll.votes[dev])||mine;
+    var locked=!!poll.locked;
+    wait.textContent=locked?"Locked. Look at the board.":"Tap one. You can change it until the timer ends.";
+    q.textContent=poll.prompt||"";
+    cite.textContent=poll.cite||"";
+    var items=poll.items&&poll.items.length?poll.items:(poll.choices||[]).map(function(c,i){
+      return {id:c, text:c, tone:["ice","gold","peach","rose"][i%4]};
+    });
+    box.innerHTML=items.map(function(it){
+      var tone=it.tone||"gold";
+      var cls=tone;
+      if(it.id===mine) cls+=" mine";
+      if(locked&&poll.key&&it.id===poll.key) cls+=" key";
+      return "<button type='button' class='"+cls+"' data-c='"+esc(it.id)+"' "+(locked?"disabled":"")+">"+esc(it.text)+"</button>";
+    }).join("");
+  }
+  function pull(){
+    fetch("/api/live",{cache:"no-store"}).then(function(r){ return r.json(); }).then(function(d){
+      paint(d&&d.poll);
+    }).catch(function(){});
+  }
+  document.getElementById("btns").onclick=function(e){
+    var b=e.target.closest("[data-c]");
+    if(!b||b.disabled) return;
+    var choice=b.getAttribute("data-c");
+    mine=choice;
+    fetch("/api/live",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({op:"vote", id:pollId, choice:choice, device:dev})
+    }).then(pull).catch(function(){});
+  };
+  pull();
+  setInterval(pull, 1000);
+})();
+</script>
+</body>
+</html>
