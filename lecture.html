@@ -351,6 +351,12 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     var snap=(window.LawPeriod && LawPeriod.snapshot && LawPeriod.snapshot())||{};
     var per=String(lastPeriod||snap.period||"");
     var key="lawlab.pkt3|"+iso+"|"+course+"|"+per;
+    var shot="lawlab.mailshot|"+iso+"|"+course+"|"+per;
+    if(!force){
+      try{ if(sessionStorage.getItem(shot)==="1"){ mailPrinted=true; return true; } }catch(e){}
+      window.__mailShot=shot;
+      try{ sessionStorage.setItem(shot,"1"); }catch(e2){}
+    }
     try{ if(!force && sessionStorage.getItem(key)==="1"){ mailPrinted=true; return true; } }catch(e){}
     if(!force && window.__pktLock===key) return false;
     if(!kit || !kit.memo){
@@ -394,15 +400,12 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
           window.__tapeNote=j.skipped ? "Thermal already has this letter." : ("Thermal has the whole letter · "+(j.printer||"POS-80"));
           try{ sessionStorage.setItem(key,"1"); }catch(e){}
         } else {
-          window.__pktLock="";
-          window.__tapeNote="Thermal did not take it"+(j&&j.error?(" · "+j.error):"")+". Tap OPEN MAIL again.";
+          window.__tapeNote="Thermal did not take it"+(j&&j.error?(" · "+j.error):"")+". One slip per period. It will not try again on the next click.";
         }
         if(mailShown) try{ setStage(memoHtml(), pocketBox()); }catch(e){}
       })
       .catch(function(){
-        window.__pktLock="";
-        window.__tapeNote="Thermal did not answer. Tap OPEN MAIL again.";
-        if(mailShown) try{ setStage(memoHtml(), pocketBox()); }catch(e){}
+        window.__tapeNote="Thermal did not answer. One slip per period. It will not try again on the next click.";
       });
     return true;
   }
