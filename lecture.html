@@ -1,1 +1,1534 @@
-<PLACEHOLDER>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OneScreen · Lecture</title>
+<script>try{navigator.serviceWorker&&navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister();});});}catch(e){}</script>
+<script src="js/period.js"></script>
+<script src="js/kit-bank.js?v=38"></script>
+<script src="js/kit.js?v=49"></script>
+<script src="js/games.js?v=3"></script>
+<script src="js/roster.js"></script>
+<script src="js/live-bus.js"></script>
+<script src="js/coldcall.js"></script>
+<script src="js/ygm.js?v=25"></script>
+<script src="js/heartbeat.js"></script>
+<script src="js/dock.js"></script>
+<link rel="stylesheet" href="css/read.css">
+
+<style>
+:root{--bg:#000;--peach:#ffcc99;--gold:#ff9900;--ice:#99ccff;--ok:#99cc99;--lilac:#cc99cc;--font:Antonio,"Arial Narrow",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#000;color:var(--peach);font-family:var(--font);overflow:hidden}
+body{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100dvh}
+main{min-height:0;padding:10px 16px 6px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,22vw);gap:12px;align-items:stretch}
+main.deck{grid-template-columns:minmax(0,1.05fr) minmax(320px,48vw)}
+main.one{grid-template-columns:1fr}
+.stage-copy{min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.stage-art{min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.chrome{background:#000;flex-shrink:0}
+iframe.game,video.game{grid-column:1/-1;width:100%;height:100%;border:0;min-height:0;background:#000}
+audio.game{width:100%;min-height:48px}
+.vtape{display:block;width:100%;text-align:left;margin:4px 0;min-height:56px}
+.vtape small{display:block;opacity:.75;font-weight:500;letter-spacing:.06em}
+header{display:grid;grid-template-columns:72px 1fr auto auto auto;gap:6px;padding:6px 12px 0}
+#watchhead,#callhead{min-width:100px;min-height:48px;font-size:18px}
+#watchhead{background:#99cc99}
+#callhead{background:#cc6666;color:#fff}
+.cap{background:var(--gold);color:#000;border-radius:0 0 0 36px;display:flex;align-items:flex-end;justify-content:flex-end;padding:0 12px 6px;font-weight:700}
+.title{background:var(--lilac);color:#000;border-radius:0 0 28px 0;padding:0 14px 6px;display:flex;align-items:flex-end;justify-content:space-between;min-width:0}
+.title b{font-size:clamp(16px,2.2vw,28px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clock{background:#f7ae45;color:#000;border-radius:0 0 24px 24px;padding:6px 12px;text-align:right}
+h1{color:var(--gold);margin:0;letter-spacing:.06em;font-size:clamp(26px,3.6vw,52px);line-height:1.08;flex:0 0 auto}
+main .body{background:transparent;color:var(--peach);padding:0;border-radius:0;font-size:clamp(18px,2.1vw,28px);line-height:1.28;font-weight:500;overflow:auto;min-height:0;flex:1 1 auto}
+main .body p{color:var(--peach);margin:0 0 8px;font-size:inherit;line-height:inherit;font-weight:500}
+.ask{color:var(--ice);font-size:clamp(16px,1.9vw,24px);margin:4px 0 0;flex:0 0 auto}
+.row{display:flex;flex-wrap:nowrap;gap:6px;overflow:hidden}
+button{min-height:44px;border:0;border-radius:0 16px;padding:8px 12px;font:700 14px var(--font);background:var(--gold);color:#000;cursor:pointer;white-space:nowrap}
+.ok{background:var(--ok)}
+.open-art,.howto-shot{width:100%;max-height:62vh;object-fit:contain;object-position:center;border-radius:0 18px;background:#111;flex:1 1 auto}
+figure.frame{margin:0;display:flex;flex-direction:column;gap:4px;min-height:0}
+figure.frame figcaption{color:#99ccff;font-size:clamp(13px,1.4vw,18px);letter-spacing:.03em;line-height:1.25}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0;flex:1}
+.pair figure.frame img{max-height:54vh}
+.cite{color:var(--ice);letter-spacing:.05em;font-size:clamp(13px,1.4vw,18px);flex:0 0 auto}
+nav.lab-dock{position:relative;z-index:10000;background:#000}
+.callbar{display:flex;gap:8px;align-items:center;padding:4px 12px;background:#140e08;overflow:hidden;min-height:0}
+.callbar:empty{display:none}
+.callbar button{min-height:40px;flex:0 0 auto}
+.callbar b{flex:1;min-width:0;font-size:clamp(16px,2.4vw,26px);color:#ff9900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#callflash{display:none !important}
+.pocketqr{float:none;width:100%;margin:0;background:#ffcc99;color:#000;border-radius:0 18px;padding:8px;text-align:center}
+.pocketqr img{width:100%;max-height:16vh;height:auto;display:block;background:#ffcc99;object-fit:contain}
+.pocketqr b{display:block;letter-spacing:.12em;font-size:13px;margin-top:4px}
+.pocketqr small{display:block;font-size:10px;word-break:break-all}
+.stage-copy .row{flex-wrap:wrap}
+.docket{display:flex;flex-direction:column;gap:8px;min-height:0;flex:1}
+.docket .prompt{font-size:clamp(20px,2.6vw,36px);line-height:1.2;color:#ffcc99;margin:0}
+.docket .score{font-size:clamp(16px,2vw,26px);color:#ff9900;letter-spacing:.08em;margin:0}
+.call .bars{display:flex;flex-direction:column;gap:8px;min-height:0}
+.call .opt{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:8px 14px;border-radius:0 16px;color:#000;font-weight:700;font-size:clamp(15px,1.7vw,22px);line-height:1.2}
+.call .opt b{font-weight:700}
+.call .opt em{font-style:normal;font-size:clamp(18px,2vw,28px);flex:0 0 auto}
+.call .opt.ice{background:#99ccff}
+.call .opt.gold{background:#ff9900}
+.call .opt.peach{background:#ffcc99}
+.call .opt.rose{background:#cc6666;color:#fff}
+.call .opt.key{outline:4px solid #fff}
+.vote{display:flex;gap:10px;margin-top:4px}
+.vote button{flex:1;min-height:64px;font-size:clamp(18px,2.4vw,32px);letter-spacing:.08em;white-space:normal}
+.stage-copy iframe.game,.stage-copy video.game{flex:1;height:100%;min-height:42vh}
+body.conf h1{font-size:clamp(40px,6vw,84px)}
+body.conf main .body{font-size:clamp(22px,2.6vw,36px);line-height:1.35}
+body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+  <div class="cap">285</div>
+  <div class="title"><b id="head">LECTURE</b><span id="sub">CLOCK A</span></div>
+  <button type="button" class="ok" id="watchhead">WATCH</button>
+  <button type="button" id="callhead">CALL</button>
+  <div class="clock"><small id="ph">—</small><strong id="clk">—</strong></div>
+</header>
+<main id="main"></main>
+<div class="chrome">
+<div id="callflash" hidden></div>
+<div class="callbar" id="callbar"></div>
+<div class="row" style="padding:8px 14px 4px">
+  <button type="button" class="ok" id="watch">WATCH</button>
+  <button type="button" id="callbtn">CALL CLERK</button>
+  <button type="button" id="menuout">MENU</button>
+  <button type="button" id="back">BACK</button>
+  <button type="button" class="ok" id="next">NEXT</button>
+  <button type="button" id="mail">OPEN MAIL</button>
+  <button type="button" id="prompter">TELEPROMPTER</button>
+</div>
+<nav class="lab-dock"></nav>
+</div>
+<script>
+(function(){
+  var LS_VIDS=[
+    {title:"Due Process · Crash Course 28", mins:"board brief",
+     file:"/videos/due-process.mp4",
+     say:[
+       "Due process means the government has to play fair before it takes life, liberty, or property from you.",
+       "The Fifth Amendment binds the federal government. The Fourteenth binds the states. A public school is the state.",
+       "Procedure is the how: notice of the charge, a chance to tell your side, someone who decides.",
+       "Goss v. Lopez: a ten-day suspension is not small. Ohio already promised public school. They cannot take those days without notice and a chance to speak.",
+       "It is not a full trial. No lawyer is required for a short suspension. It is also not a silent walk to the office."
+     ],
+     ask:"Name the two things Goss requires before a short suspension."},
+    {title:"Equal Protection · Crash Course 29", mins:"board brief",
+     file:"/videos/equal-protection.mp4",
+     say:[
+       "Equal protection is the Fourteenth Amendment's other half: the state may not treat people worse without a real reason.",
+       "A principal is the state. A handbook rule is the state. A suspension is the state acting.",
+       "Today we are not litigating race or classification. We are noticing who the state is in this building.",
+       "If the school can skip notice for one student and not another, that is both due process and equal protection in the same hallway."
+     ],
+     ask:"Why does the 14th reach a public-school principal?"},
+    {title:"Goss v. Lopez · Oral Argument", mins:"audio + brief",
+     mp3:"/api/media/goss",
+     say:[
+       "October 16, 1974. Nine Ohio students, including Dwight Lopez, got up to ten days out. No hearing.",
+       "The school said: we need to keep order. The students said: you took our education without asking.",
+       "Listen for three words: notice. opportunity. heard.",
+       "When a justice or a lawyer talks past those words, pause. Ask: was that a hearing, or a meeting?"
+     ],
+     ask:"Pause. Was that notice? A chance to be heard? Who decided?"}
+  ];
+  var ILS_VIDS=[
+    {title:"Taking Notes · naming log", mins:"board brief",
+     file:"/videos/taking-notes.mp4",
+     say:[
+       "Cornell notes: cue on the left, facts on the right, summary at the bottom. That is a naming log for your own brain.",
+       "Today's clinic rule is the same shape: one pattern, every paper, so a stranger can open the Brooks file.",
+       "Last name first. Date. What the sheet is. That is the cue column of a file."
+     ],
+     ask:"Write the clinic name for the Brooks intake sheet."},
+    {title:"One system · every paper", mins:"board brief",
+     file:"/videos/planning.mp4",
+     say:[
+       "One system. Same pattern every time. That is how a file survives you.",
+       "If you invent a new name for every sheet, the next person cannot search. That is a pile, not a file.",
+       "285-ILS-2026-014 is the matter. BROOKS is the tab. Exhibits stay exhibits."
+     ],
+     ask:"Say the naming pattern out loud once."},
+    {title:"A memo is a short paper", mins:"board brief",
+     file:"/videos/papers.mp4",
+     say:[
+       "A memo is a short paper with numbered steps. Subject line first. Last line is never advice.",
+       "You dump the facts. You label the papers. You send every advice question to the partner.",
+       "If it would not survive a stranger, it is not done."
+     ],
+     ask:"What is the last line of today's memo not allowed to be?"},
+    {title:"Docket · how a court finds a matter", mins:"board brief",
+     file:"/videos/scotus-proc.mp4",
+     say:[
+       "A docket is a list of matters. A file number is how the office finds the jacket later.",
+       "The Supreme Court puts every case on a docket. We put Brooks on 285-ILS-2026-014.",
+       "If the number is wrong, the exhibit is lost. That is today's whole job."
+     ],
+     ask:"What is today's file number?"}
+  ];
+  function vidList(){
+    var fallback = (course==="LS"?LS_VIDS:ILS_VIDS);
+    var k = (kit && kit.videos) || [];
+    if (k.length && k[0] && (k[0].say || []).length) return k;
+    return fallback;
+  }
+  var kit=null, slide=0, spoken=false, mailShown=false, mailPrinted=false, viewKey="", course=LawKit.courseNow(), iso=LawKit.iso(), lastPeriod="", overlay=null, manual=false, manualPhase="", letterHold=false, letterPhase="", rangKey="", ringTries=0, watchOn=false, watchI=-1, readerSpoken="", leaderSpoken="";
+  var SAY = (window.speechSynthesis && speechSynthesis.speak) ? speechSynthesis.speak.bind(speechSynthesis) : null;
+  function openWatch(idx){
+    watchOn=true;
+    watchI = (idx==null || idx==="") ? -1 : Number(idx);
+    viewKey="";
+    paint();
+  }
+  function closeWatch(){
+    watchOn=false; watchI=-1; viewKey=""; paint();
+  }
+  function pocketUrl(){
+    return "http://ituxpro.local:8080/pocket.html?tab=quiz";
+  }
+  function pocketQrSrc(){
+    return "pocket-qr.svg";
+  }
+  function pocketBox(){
+    return "<aside class='pocketqr'><img src='"+pocketQrSrc()+"' alt='Pocket QR'><b>PHONE</b><small>"+pocketUrl()+"</small></aside>";
+  }
+  function setStage(copy, art, wide){
+    var main=document.getElementById("main");
+    if(art){
+      main.className=wide?"deck":"";
+      main.innerHTML="<div class='stage-copy'>"+copy+"</div><aside class='stage-art'>"+art+"</aside>";
+    } else {
+      main.className="one";
+      main.innerHTML="<div class='stage-copy'>"+copy+"</div>";
+    }
+    if(document.getElementById("booktext")) fillBook();
+  }
+  function esc(s){
+    return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function frameHtml(frames){
+    var figs=(frames||[]).map(function(f){
+      var src=typeof f==="string"?f:(f.src||"");
+      var cap=typeof f==="string"?"":(f.cap||"");
+      if(!src) return "";
+      return "<figure class='frame'><img class='open-art' alt='"+esc(cap)+"' src='"+esc(src)+"' onerror=\"this.parentNode.style.display='none'\"><figcaption>"+esc(cap)+"</figcaption></figure>";
+    }).join("");
+    if((frames||[]).length>=2) return "<div class='pair'>"+figs+"</div>";
+    return figs;
+  }
+  function titleCardHtml(){
+    var plan=(kit&&kit.plan)||{};
+    var title=plan.title||((course==="LS"?"LS":"ILS")+" · Room 285");
+    var obj=plan.objective||"";
+    var purp=(window.LawKit&&LawKit.purpose)?LawKit.purpose(plan):"";
+    return {
+      copy: "<h1>"+title+"</h1>"+
+        "<p class='cite'>"+(course||"")+" · "+(iso||"")+" · first 15 · scan the code</p>"+
+        (obj?("<p class='body'>"+obj+"</p>"):"<p class='body'>Scan the code. Sit. The quiz is work you already learned.</p>")+
+        (purp?("<p class='cite'><b>Purpose.</b> "+purp+"</p>"):""),
+      art: pocketBox()
+    };
+  }
+  function inOnboard(){
+    if(!iso) return false;
+    if(iso>="2026-08-24" && iso<="2026-09-18") return true;
+    if(iso>="2027-01-19" && iso<="2027-02-06") return true;
+    return false;
+  }
+  function deckSlides(){
+    var slides=((kit&&kit.deck&&kit.deck.slides)||[]).slice();
+    if(!inOnboard() || !slides.length) return slides;
+    if(slides.some(function(s){ return s && s.id==="how-click"; })) return slides;
+    var how=[
+      {id:"how-click", title:"OFFICE · where you tap", shots:["howto/office-mail.svg"],
+        body:["1  LAST, FIRST — no PIN on Office.","2  Ice-blue OPEN FILE on the left.","3  SUBJECT LINE on the right. Copy it. Do not invent a jacket tab.","4  MEMO. Numbered steps. Last line is never advice.","5  SEND FIRST DRAFT. Answer the partner’s questions. Then FILE FINAL."],
+        ask:"Point at OPEN FILE on this picture."},
+      {id:"how-file", title:"OPEN FILE · the packet", shots:["howto/office-file.svg"],
+        body:["This is the file. Facts and papers live here.","Copy the subject line. Write the memo from what you see, not from a folder cover."],
+        ask:"What do you copy into SUBJECT LINE?"},
+      {id:"how-clerk", title:"PARTNER · questions then model", shots:["howto/office-clerk.svg"],
+        body:["First send = partner asks clarifying questions. Rewrite.","Second send = FILE FINAL. You see the model, not a grade.","Mongan still sets the Campus letter later."],
+        ask:"When do you tap FILE FINAL?"}
+    ];
+    return [slides[0]].concat(how).concat(slides.slice(1));
+  }
+  function gpu(){
+    var pack=overlay||{};
+    if(pack.iso && pack.iso!==iso) return {};
+    var c=pack.courses||{};
+    return c[course] || ((course==="LS") ? (c.LS||{}) : (c.ILS||{})) || {};
+  }
+  function loadOverlay(){
+    var urls=["/night-clerk/overlay-"+iso+".json","/night-clerk/overlay.json","night-clerk/overlay.json"];
+    function next(i){
+      if(i>=urls.length) return;
+      fetch(urls[i], {cache:"no-store"}).then(function(r){ return r.ok?r.json():null; }).then(function(j){
+        if(j && j.courses){ overlay=j; viewKey=""; paint(); }
+        else next(i+1);
+      }).catch(function(){ next(i+1); });
+    }
+    next(0);
+  }
+  function memoHtml(){
+    var m=(kit&&kit.memo)||{};
+    var from=m.fromName||m.from||"Partner";
+    var sub=m.subject||m.subjectLine||"";
+    var body=String(m.body||"").trim();
+    var steps=(m.steps||[]).map(function(s){ return "<p>"+esc(s)+"</p>"; }).join("");
+    var tape=window.__tapeNote||"";
+    return "<h1>MEMO</h1>"+
+      "<p class='cite'>From "+esc(from)+" · Lead 1 reads once. Do not type yet.</p>"+
+      (sub?("<p class='ask'>"+esc(sub)+"</p>"):"")+
+      "<div class='body'><p>"+(body?esc(body):"Open OFFICE. The letter is on the file.")+"</p>"+steps+"</div>"+
+      "<p class='cite'>"+(tape?esc(tape):"Class is in OFFICE. This board does not speak the letter.")+"</p>";
+  }
+  function classBeat(ph){
+    return ph && ["entry","quiz","mail","huddle","brief","lead","model","guide","handoff","socratic","do","play","game","lib","read","exit","bridge","wrap"].indexOf(ph.id)>=0;
+  }
+  function ringOnce(force){
+    if(course==="PLAN") return;
+    var ph=LawKit.phase();
+    if(!force && (!classBeat(ph) || (ph.id!=="mail" && !(ph.min>=15)))) return;
+    var per=String((ph&&ph.period)||lastPeriod||"");
+    var key=iso+"|"+course+"|"+per;
+    if(!force && rangKey===key){
+      if(window.LawMailPing && !LawMailPing.heard() && ringTries<6){
+        ringTries++;
+        LawMailPing.unlock && LawMailPing.unlock();
+        LawMailPing.play(false);
+      }
+      if(!mailPrinted) return;
+      return;
+    }
+    if(force && rangKey===key){
+      if(window.LawMailPing){
+        LawMailPing.unlock && LawMailPing.unlock();
+        LawMailPing.play(true);
+      }
+      mailShown=true;
+      spoken=true;
+      return;
+    }
+    rangKey=key;
+    ringTries=0;
+    try{ if(window.speechSynthesis){ speechSynthesis.cancel(); speechSynthesis.speak=function(){}; } }catch(e){}
+    if(window.LawMailPing){
+      if(force && LawMailPing.reset) LawMailPing.reset();
+      LawMailPing.unlock && LawMailPing.unlock();
+      LawMailPing.play(!!force);
+    }
+    mailShown=true;
+    spoken=true;
+  }
+  function ygm(fromClick){
+    letterHold=!!fromClick;
+    letterPhase=(LawKit.phase()||{}).id||"";
+    viewKey="";
+    ringOnce(!!fromClick);
+    if(fromClick) paint();
+  }
+  function mailTapeText(){
+    var m=(kit&&kit.memo)||{};
+    var f=(kit&&kit.file)||{};
+    var notes=(kit&&kit.notes)||{};
+    var day=(kit&&kit.day)||{};
+    var lines=[];
+    var body=String(m.body||"").trim();
+    if(body) lines.push(body);
+    if(m.task){ lines.push(""); lines.push("TASK"); lines.push(String(m.task)); }
+    var thermal=day.thermal||notes.thermal||[];
+    if(thermal.length){
+      lines.push("");
+      lines.push("ON THE SLIP");
+      thermal.forEach(function(s){ lines.push(String(s)); });
+    }
+    (m.steps||[]).forEach(function(s,i){
+      if(i===0){ lines.push(""); lines.push("STEPS"); }
+      lines.push(String(s));
+    });
+    (f.docs||[]).forEach(function(d){
+      var title=String((d&&d.title)||(d&&d.kind)||"PAPER");
+      var text=String((d&&d.text)||"").trim();
+      if(!text) return;
+      lines.push("");
+      lines.push(title.toUpperCase());
+      lines.push(text);
+    });
+    (f.facts||[]).forEach(function(s,i){
+      if(i===0){ lines.push(""); lines.push("FACTS ON THE FILE"); }
+      lines.push("• "+String(s));
+    });
+    return lines.join("\n");
+  }
+  function printPackets(force){
+    if(course==="PLAN") return false;
+    var snap=(window.LawPeriod && LawPeriod.snapshot && LawPeriod.snapshot())||{};
+    var per=String(lastPeriod||snap.period||"");
+    var key="lawlab.pkt3|"+iso+"|"+course+"|"+per;
+    try{ if(!force && sessionStorage.getItem(key)==="1"){ mailPrinted=true; return true; } }catch(e){}
+    if(!force && window.__pktLock===key) return false;
+    if(!kit || !kit.memo){
+      if(window.LawKit && LawKit.load && !window.__pktWait){
+        window.__pktWait=true;
+        LawKit.load(course, iso).then(function(j){ kit=j; window.__pktWait=false; printPackets(force); if(mailShown) try{ setStage(memoHtml(), pocketBox()); }catch(e){} });
+      }
+      window.__tapeNote="Thermal waiting on the file.";
+      return false;
+    }
+    window.__pktLock=key;
+    window.__tapeNote="Sending the whole letter to the thermal…";
+    var m=(kit&&kit.memo)||{};
+    var f=(kit&&kit.file)||{};
+    var plan=(kit&&kit.plan)||{};
+    var payload={
+      kind:"packet",
+      forms:"off",
+      tape: force ? "force" : "auto",
+      packed:true,
+      name:"CLASS SET",
+      iso:iso,
+      course:course,
+      period:per,
+      from:m.fromName||m.from||"Partner",
+      subject:m.subject||m.subjectLine||"",
+      title:plan.title||m.subject||"",
+      body:mailTapeText(),
+      matter:f.matter||m.fileId||"",
+      steps:[],
+      facts:[],
+      exhibits:[],
+      docs:[]
+    };
+    fetch("/api/print",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),keepalive:true,cache:"no-store"})
+      .then(function(r){ return r.json().catch(function(){ return {}; }); })
+      .then(function(j){
+        var tapeOk=j && j.kind==="email" && j.ok===true && !j.error;
+        if(tapeOk){
+          mailPrinted=true;
+          window.__tapeNote=j.skipped ? "Thermal already has this letter." : ("Thermal has the whole letter · "+(j.printer||"POS-80"));
+          try{ sessionStorage.setItem(key,"1"); }catch(e){}
+        } else {
+          window.__pktLock="";
+          window.__tapeNote="Thermal did not take it"+(j&&j.error?(" · "+j.error):"")+". Tap OPEN MAIL again.";
+        }
+        if(mailShown) try{ setStage(memoHtml(), pocketBox()); }catch(e){}
+      })
+      .catch(function(){
+        window.__pktLock="";
+        window.__tapeNote="Thermal did not answer. Tap OPEN MAIL again.";
+        if(mailShown) try{ setStage(memoHtml(), pocketBox()); }catch(e){}
+      });
+    return true;
+  }
+  function gloss(){
+    if(course==="LS") return "Counsel attaches at the charge or the first court date. Appointed vs retained. Boone. Not Whitfield.";
+    return "Copy the statute words. Mondawmin is a file fact, not an element of § 10-201(c)(2).";
+  }
+  function goPlay(id){
+    var u=new URL(location.href);
+    u.searchParams.set("play", id);
+    u.searchParams.set("course", course);
+    history.replaceState({},"",u);
+    viewKey=""; paint();
+  }
+  function atq(){
+    var a=new URLSearchParams(location.search).get("at");
+    return a?("&at="+encodeURIComponent(a)):"";
+  }
+  function conferenceOn(){
+    try{
+      var map={}, parts=new Intl.DateTimeFormat("en-US",{
+        timeZone:"America/New_York", year:"numeric", month:"2-digit", day:"2-digit",
+        hourCycle:"h23", hour:"2-digit", minute:"2-digit", hour12:false
+      }).formatToParts(new Date());
+      parts.forEach(function(x){ map[x.type]=x.value; });
+      if(map.hour==="24") map.hour="00";
+      var h=Number(map.hour), mi=Number(map.minute);
+      var dp=String(map.dayPeriod||"").toLowerCase();
+      if(dp==="pm" && h<12) h+=12;
+      if(dp==="am" && h===12) h=0;
+      if(map.year!=="2026" || map.month!=="09" || map.day!=="24") return false;
+      var mins=h*60+mi;
+      return mins>=17*60+30 && mins<19*60;
+    }catch(e){ return false; }
+  }
+  function paintConference(){
+    document.body.classList.add("conf");
+    document.getElementById("head").textContent="BACK TO SCHOOL";
+    document.getElementById("sub").textContent="5:30–7:00";
+    document.getElementById("ph").textContent="TONIGHT";
+    var key="conf|2026-09-24";
+    if(viewKey===key) return;
+    viewKey=key;
+    var main=document.getElementById("main");
+    if(main) main.classList.add("one");
+    setStage(
+      "<h1>LEGAL SERVICES</h1>"+
+      "<p class='cite'>BACK TO SCHOOL NIGHT · LAPSEN · ROOM 285 · 5:30–7:00</p>"+
+      "<p class='ask'>MR. MATTHEW MONGAN</p>"+
+      "<div class='body'>"+
+      "<p>This is the LAPSEN Legal Services program: the national law curriculum, taught here as Maryland law. Three courses. This year is the first.</p>"+
+      "<p><b>This year.</b> Introduction to Legal Studies. Careers, the law office, courts, constitutional rights, civil and criminal law, pretrial, trials, and a mock trial. ILS, LS-1, and LS-2. The text is NALS.</p>"+
+      "<p><b>Year 2.</b> Criminal Law. The crimes, search and seizure, arrests, Miranda, trial, and sentencing.</p>"+
+      "<p><b>Year 3.</b> Civil Law, then the NALS Accredited Legal Professional exam.</p>"+
+      "<p>Students work a real file. They do not give the client legal advice.</p>"+
+      "</div>"
+    );
+  }
+  function mailCue(){
+    try{
+      var sec=course==="LS"?"LS":"ILS";
+      var court=window.LawGames && ((LawGames.sitting && LawGames.sitting(sec, iso)) || (!LawGames.sitting && LawGames.courtDay && LawGames.courtDay(sec, iso)));
+      if(court) return "All Rise";
+    }catch(e){}
+    return "You've Got Mail";
+  }
+  function chapterHtml(){
+    var r=kit.reader||{};
+    var para=String(r.chunk||r.excerpt||"Open the pages on the board. Read. Stop where the sitting stops.").replace(/\bticklers\b/ig,"reminders").replace(/\btickler\b/ig,"reminder");
+    var qs=(r.questions||[]).slice(0,2).map(function(q){ return "<p class='ask'>"+esc(q)+"</p>"; }).join("");
+    return "<h1>CHAPTER READ</h1>"+
+      "<p class='cite'>Teacher reads. Class follows. No case brief today.</p>"+
+      "<p class='cite'>"+esc(r.source||"NALS")+(r.pages?(" · "+esc(r.pages)):"")+"</p>"+
+      "<p class='body'><b>"+esc(r.title||"Today's sitting")+"</b></p>"+
+      "<div class='body' id='booktext'><p class='body'>"+esc(para)+"</p></div>"+
+      qs+
+      (r.continue_in?("<p class='cite'>"+esc(r.continue_in)+"</p>"):"");
+  }
+  function fillBook(){
+    var r=(kit&&kit.reader)||{};
+    var el=document.getElementById("booktext");
+    if(!el||!r.id) return;
+    fetch("/library/nals/sittings/"+encodeURIComponent(r.id)+".txt").then(function(res){
+      if(!res.ok) throw 0;
+      return res.text();
+    }).then(function(t){
+      var box=document.getElementById("booktext");
+      if(!box||!t) return;
+      box.innerHTML="<pre style=\"white-space:pre-wrap;font:20px/1.4 Georgia,serif\">"+esc(t)+"</pre>";
+    }).catch(function(){});
+  }
+  function caseReadHtml(){
+    var db=(kit&&kit.dayBrief)||{};
+    if(db.kind==="nals" || (window.LawKit&&LawKit.isWed&&LawKit.isWed())) return chapterHtml();
+    var c=db.case||{};
+    var st=db.statute||{};
+    var statuteDay=db.role==="statute";
+    var head=statuteDay?"STATUTE READ":"CASE READ";
+    var who=c.name?(esc(c.name)+(c.cite?(", "+esc(c.cite)):"") ):"the case on the board";
+    var lines=[];
+    lines.push("Teacher reads. Class follows in LIBRARY. Do not write the brief yet.");
+    lines.push(mailCue()+" assigned this reading. The brief and the file are the next block.");
+    if(statuteDay){
+      lines.push("Open the code. Read "+who+". Copy what it says. This is not a case.");
+    } else if(c.name){
+      lines.push("Search LIBRARY for "+esc(String(c.name).split(" v. ")[0])+". Open "+who+".");
+      lines.push("Follow the opinion: what happened, the question, the answer. Do not skip to a line you did not hear.");
+    }
+    if(c.point) lines.push(esc(c.point));
+    if(st.cite && !statuteDay) lines.push("Statute next to it, not today's brief: "+esc(st.cite)+".");
+    var f=kit.file||{};
+    if(f.client) lines.push("File stays closed until the lecture: "+esc(f.client)+(f.number?(" · "+esc(f.number)):"")+".");
+    return "<h1>"+head+"</h1><p class='cite'>Case read · teacher guided · file stays closed</p>"+
+      lines.map(function(t){ return "<p class='body'>"+t+"</p>"; }).join("");
+  }
+  function workHtml(){
+    var db=(kit&&kit.dayBrief)||{};
+    var wed=db.kind==="nals" || (window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    var memo=(kit&&kit.memo)||{};
+    var steps=(memo.steps||[]).map(function(s){ return "<p>"+esc(s)+"</p>"; }).join("");
+    var f=kit.file||{};
+    if(wed){
+      var r=kit.reader||{};
+      var qs=(r.questions||[]).map(function(q,i){ return "<p class='ask'>"+(i+1)+". "+esc(q)+"</p>"; }).join("");
+      return "<h1>THEY DO</h1>"+
+        "<p class='cite'>Class writes. No cold call. No new lecture. No case brief.</p>"+
+        "<p class='body'>Write from today's sitting only. Cornell notes. Stop where the section stops.</p>"+
+        (qs||"<p class='ask'>What did the section actually say?</p>")+
+        "<p class='cite'>Last line is never advice.</p>";
+    }
+    return "<h1>THEY DO</h1>"+
+      "<p class='cite'>Class writes. No cold call. OFFICE."+(f.client?(" File: "+esc(f.client)+"."):"")+"</p>"+
+      (memo.subject?("<p class='ask'>"+esc(memo.subject)+"</p>"):"")+
+      "<div class='body'>"+(steps||"<p>Write the memo from the brief and today's paper. Numbered steps.</p>")+"</div>"+
+      "<p class='cite'>Same and different stay on the paper. Do not add facts. Do not draft a motion. Last line is never advice.</p>";
+  }
+  function modelHtml(){
+    var db=(kit&&kit.dayBrief)||{};
+    var wed=db.kind==="nals" || (window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    var lines=wed
+      ? ["You just cold-called the chapter. Watch. I do one note from this sitting. You do not write yet."]
+      : ["You just cold-called the brief, the statute, and the file. Watch. I put them in one brief. You do not write yet."];
+    if(wed){
+      var r=(kit&&kit.reader)||{};
+      lines.push("Today is the textbook. There is no case brief.");
+      lines.push("I read "+(r.source||"the section")+(r.pages?(" "+r.pages):"")+".");
+      (r.chunks||[]).slice(0,2).forEach(function(c){
+        var t=(c&&(c.t||c.text))||"";
+        if(t) lines.push(String(t));
+      });
+      lines.push("You will write from this sitting only. Not yet.");
+    } else if(db.kind==="pair"&&db.fed&&db.md){
+      lines.push("First brief. "+db.fed.name+", "+db.fed.cite+".");
+      if(db.fed.point) lines.push(db.fed.point);
+      lines.push("Then "+db.md.name+", "+db.md.cite+".");
+      if(db.md.point) lines.push(db.md.point);
+      if(db.same) lines.push(db.same);
+    } else if(db.case){
+      var c=db.case, st=db.statute||{};
+      var f=kit.file||{};
+      lines.push("Today's brief is "+c.name+(c.cite?(", "+c.cite):"")+".");
+      if(c.point) lines.push(c.point);
+      if(st.cite) lines.push("The statute is "+st.cite+"."+(st.line?(" "+st.line):""));
+      if(f.client) lines.push("The file is "+f.client+(f.chargeLine?(". "+f.chargeLine):"")+".");
+    } else {
+      var memo=(kit&&kit.memo)||{};
+      (memo.steps||[]).slice(0,4).forEach(function(s){ lines.push(String(s)); });
+    }
+    lines.push("Then you write. Last line is never advice.");
+    return "<h1>I MODEL</h1><p class='cite'>You model it once. Cold call is still open. They do not write yet.</p>"+
+      lines.map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join("");
+  }
+  function guideHtml(){
+    var who=leaderSpoken||"";
+    var script=who?readerScript(who):"";
+    var paras=script?script.split("\n").map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join(""):"";
+    var head=who
+      ? ("<h1>"+esc(who)+"</h1><p class='cite'>THEY LEAD · read the tape · first name, then last name</p>"+(window.__leadNote?("<p class='cite'>"+esc(window.__leadNote)+"</p>"):""))
+      : ("<h1>THEY LEAD</h1><p class='cite'>"+esc(window.__leadNote||"Waiting on the roll. Only a student marked present leads.")+"</p>");
+    var memo=(kit&&kit.memo)||{};
+    var steps=(memo.steps||[]).slice(0,5).map(function(s,i){ return "<p class='body'>"+(i+1)+". "+esc(s)+"</p>"; }).join("");
+    return head+paras+steps+"<p class='cite'>30–60. The lead runs the memo on this board. You guide from OFFICE. The class follows. No cold call. Last line is never advice.</p>";
+  }
+  function titleBit(s){
+    return String(s||"").toLowerCase().replace(/(^|[\s\-])([a-z])/g, function(_, a, b){ return a+b.toUpperCase(); })
+      .replace(/\bIii\b/g, "III").replace(/\bIi\b/g, "II");
+  }
+  function firstLast(raw){
+    raw=String(raw||"").replace(/\s+/g, " ").trim();
+    if(!raw) return "";
+    var comma=raw.indexOf(",");
+    if(comma>0){
+      return (titleBit(raw.slice(comma+1))+" "+titleBit(raw.slice(0, comma))).replace(/\s+/g, " ").trim();
+    }
+    return titleBit(raw);
+  }
+  function classSection(){
+    var sec="";
+    try{
+      var s=window.LawPeriod&&LawPeriod.snapshot&&LawPeriod.snapshot();
+      if(s){
+        sec=s.section||"";
+        if(!sec||sec==="LS") sec=(s.map&&s.map[s.period])||"";
+      }
+    }catch(e){}
+    if(sec==="ILS"||sec==="LS-1"||sec==="LS-2") return sec;
+    if(course==="ILS") return "ILS";
+    return "";
+  }
+  function normName(n){
+    return String(n||"").toUpperCase().replace(/\s+/g," ").replace(/\s*,\s*/,", ").trim();
+  }
+  function presentNow(){
+    var sec=classSection();
+    if(!sec) return [];
+    var roster=[];
+    if(window.LawRoster&&LawRoster.forCourse){
+      roster=(LawRoster.forCourse(sec)||[]).map(function(r){ return r.name||""; }).filter(Boolean);
+    }
+    var here={};
+    try{
+      var st=window.LawLive&&LawLive.get&&LawLive.get();
+      var bucket=(st&&st.attend&&st.attend[sec])||{};
+      Object.keys(bucket).forEach(function(n){
+        var stt=String((bucket[n]||{}).status||"").toUpperCase();
+        if(stt==="P"||stt==="T") here[normName(n)]=n;
+      });
+    }catch(e){}
+    if(!roster.length) return [];
+    return roster.filter(function(n){ return here[normName(n)]; });
+  }
+  function readerScript(spoken){
+    var db=(kit&&kit.dayBrief)||{};
+    var f=(kit&&kit.file)||{};
+    var lines=["I am "+spoken+".", "I read this. Then we write. I do not give advice."];
+    var wed=db.kind==="nals"||(window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    if(wed){
+      var r=(kit&&kit.reader)||{};
+      lines.push("Today is the textbook. There is no case brief.");
+      lines.push("We read "+(r.source||"the section")+(r.pages?(" "+r.pages):"")+".");
+      if(r.title) lines.push(String(r.title)+".");
+      (r.chunks||[]).slice(0,4).forEach(function(c){
+        var t=(c&&(c.t||c.text||c.body))||(typeof c==="string"?c:"");
+        if(t) lines.push(String(t));
+      });
+      if(!(r.chunks&&r.chunks.length)&&r.excerpt) lines.push(String(r.excerpt));
+      lines.push("Stop where the section stops.");
+    } else if(db.kind==="pair"&&db.fed&&db.md){
+      lines.push("First brief. "+db.fed.name+", "+db.fed.cite+".");
+      if(db.fed.point) lines.push(db.fed.point);
+      lines.push("Then "+db.md.name+", "+db.md.cite+".");
+      if(db.md.point) lines.push(db.md.point);
+      if(db.same) lines.push(db.same);
+      if(f.client) lines.push("The file is "+f.client+(f.chargeLine?(". "+f.chargeLine):"")+".");
+    } else if(db.case){
+      var c=db.case, st=db.statute||{};
+      lines.push("Today's brief is "+c.name+(c.cite?(", "+c.cite):"")+".");
+      if(c.point) lines.push(c.point);
+      if(st.cite) lines.push("The statute is "+st.cite+"."+(st.line?(" "+st.line):""));
+      if(db.charge) lines.push(db.charge);
+      if(f.client) lines.push("The file is "+f.client+(f.number?(" "+f.number):"")+(f.chargeLine?(". "+f.chargeLine):"")+".");
+      if(f.facts&&f.facts[0]) lines.push("One fact on the file: "+f.facts[0]);
+    } else {
+      var memo=(kit&&kit.memo)||{};
+      if(memo.task) lines.push(String(memo.task));
+      (memo.steps||[]).forEach(function(s){ lines.push(String(s)); });
+    }
+    lines.push("Last line is never advice. A question about what the client should do goes to the partner.");
+    return lines.join("\n");
+  }
+  function teacherReadScript(){
+    var db=(kit&&kit.dayBrief)||{};
+    var f=(kit&&kit.file)||{};
+    var wed=db.kind==="nals"||(window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    var lines=["I read. The class follows. Cold call is open. They do not write yet."];
+    if(wed){
+      var r=(kit&&kit.reader)||{};
+      lines.push("Today is the textbook. There is no case brief.");
+      lines.push("Read "+(r.source||"the section")+(r.pages?(" "+r.pages):"")+".");
+      if(r.title) lines.push(String(r.title)+".");
+      (r.chunks||[]).slice(0,4).forEach(function(c){
+        var t=(c&&(c.t||c.text||c.body))||(typeof c==="string"?c:"");
+        if(t) lines.push(String(t));
+      });
+      if(!(r.chunks&&r.chunks.length)&&r.excerpt) lines.push(String(r.excerpt));
+      lines.push("Stop where the section stops.");
+    } else if(db.case){
+      var c=db.case, st=db.statute||{};
+      lines.push("Today's case is "+c.name+(c.cite?(", "+c.cite):"")+".");
+      if(c.point) lines.push(c.point);
+      if(st.cite) lines.push("The statute is "+st.cite+"."+(st.line?(" "+st.line):""));
+      if(db.charge) lines.push(db.charge);
+      if(f.client) lines.push("The file is "+f.client+(f.number?(" "+f.number):"")+(f.chargeLine?(". "+f.chargeLine):"")+".");
+      (f.facts||[]).slice(0,3).forEach(function(s){ lines.push(String(s)); });
+    } else {
+      var memo=(kit&&kit.memo)||{};
+      if(memo.task) lines.push(String(memo.task));
+      (memo.steps||[]).slice(0,4).forEach(function(s){ lines.push(String(s)); });
+    }
+    lines.push("Last line is never advice.");
+    return lines.join("\n");
+  }
+  function teacherWrapScript(){
+    var db=(kit&&kit.dayBrief)||{};
+    var wed=db.kind==="nals"||(window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    var lines=["Stop. Pens down. Last five minutes."];
+    if(wed){
+      var r=(kit&&kit.reader)||{};
+      lines.push("Wednesday is the textbook. There is no case brief.");
+      lines.push("You read "+(r.source||"today's section")+".");
+      lines.push("What you wrote comes from that sitting only.");
+    } else {
+      var c=db.case||{};
+      var f=(kit&&kit.file)||{};
+      if(c.name) lines.push("Today's brief is "+c.name+(c.cite?(", "+c.cite):"")+".");
+      if(c.point) lines.push(c.point);
+      if(db.statute&&db.statute.cite) lines.push("The statute next to it is "+db.statute.cite+".");
+      if(f.client) lines.push("The file is "+f.client+(f.chargeLine?(". "+f.chargeLine):"")+".");
+      lines.push("Same and different stay on the paper. Do not add facts. Do not draft a motion.");
+    }
+    lines.push("Last line is never advice. Then the bell.");
+    return lines.join("\n");
+  }
+  function postTape(slot, title, name, script, lock){
+    if(course==="PLAN"||!kit||!script) return;
+    try{ if(sessionStorage.getItem(lock)==="1") return; }catch(e){}
+    if(window.__tapeFlight===lock) return;
+    window.__tapeFlight=lock;
+    var ph=LawKit.phase()||{};
+    var snap=(window.LawPeriod&&LawPeriod.snapshot&&LawPeriod.snapshot())||{};
+    var per=String(ph.period||lastPeriod||snap.period||"");
+    fetch("/api/print",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        kind:"script", slot:slot, title:title, name:name, spoken:name,
+        iso:iso, course:course, period:per, script:script
+      }),
+      keepalive:true, cache:"no-store"
+    }).then(function(r){ return r.json().catch(function(){ return {}; }); }).then(function(j){
+      if(j&&j.ok){ try{ sessionStorage.setItem(lock,"1"); }catch(e2){} }
+      else window.__tapeFlight="";
+    }).catch(function(){ window.__tapeFlight=""; });
+  }
+  function printCaseRead(){
+    var ph=LawKit.phase()||{};
+    if(ph.id!=="read") return;
+    var per=String(ph.period||lastPeriod||"");
+    postTape("caseread", (window.LawKit&&LawKit.isWed&&LawKit.isWed())?"CHAPTER READ":"CASE READ", "Mr. Mongan", teacherReadScript(), "lawlab.caseread|"+iso+"|"+course+"|"+per);
+  }
+  function printWrapTape(){
+    var ph=LawKit.phase()||{};
+    if(ph.id!=="wrap") return;
+    var per=String(ph.period||lastPeriod||"");
+    postTape("wrap", "WRAP", "Mr. Mongan", teacherWrapScript(), "lawlab.wrap|"+iso+"|"+course+"|"+per);
+  }
+  function chirp(ok){
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC) return;
+      if(!window.__ac) window.__ac=new AC();
+      var ctx=window.__ac;
+      var o=ctx.createOscillator();
+      var g=ctx.createGain();
+      o.type="square";
+      o.frequency.value=ok?660:160;
+      g.gain.value=0.04;
+      o.connect(g); g.connect(ctx.destination);
+      o.start();
+      o.stop(ctx.currentTime+0.12);
+    }catch(e){}
+  }
+  function clientFace(name){
+    var n=String(name||"").toUpperCase();
+    var file="";
+    if(n.indexOf("TANYA")>=0) file="tanya.jpg";
+    else if(n.indexOf("ANDRE")>=0) file="andre.jpg";
+    else if(n.indexOf("WASHINGTON")>=0||n.indexOf("JAMAL")>=0) file="jamal.jpg";
+    else if(n.indexOf("BROOKS")>=0||n.indexOf("KEISHA")>=0||n.indexOf("AALIYAH")>=0) file="keisha.jpg";
+    if(file) return "<img class='open-art' alt='"+esc(name||"Client")+"' src='/img/clients/"+file+"'>";
+    if(window.FIRM_FACES&&FIRM_FACES.client) return "<img class='open-art' alt='Client' src='"+FIRM_FACES.client+"'>";
+    return "";
+  }
+  function clientStoryHtml(){
+    var f=(kit&&kit.file)||{};
+    var memo=(kit&&kit.memo)||{};
+    var name=f.client||"TODAY'S CLIENT";
+    var facts=(f.facts||[]).slice(0,4);
+    if(!facts.length && memo.body) facts=[String(memo.body).slice(0,480)];
+    if(!facts.length && kit&&kit.reader){
+      if(kit.reader.title) facts.push(String(kit.reader.title));
+      if(kit.reader.excerpt) facts.push(String(kit.reader.excerpt).slice(0,500));
+    }
+    if(!facts.length) facts=["The client tells only the facts on the file. Do not add any."];
+    return "<h1>YOU'VE GOT MAIL</h1>"+
+      "<p class='cite'>15–30. The client tells the story. Listen. Do not write yet.</p>"+
+      "<p class='ask'>"+esc(name)+"</p>"+
+      facts.map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join("")+
+      "<p class='cite'>The letter is the assignment. Last line is never advice.</p>";
+  }
+  function socraticBank(){
+    var out=[];
+    var r=(kit&&kit.reader)||{};
+    (r.questions||[]).forEach(function(q){ if(q) out.push(String(q)); });
+    var db=(kit&&kit.dayBrief)||{};
+    if(db.case&&db.case.name) out.push("What did "+db.case.name+" hold?");
+    if(db.statute&&db.statute.cite) out.push("What does "+db.statute.cite+" require? Use the code's words.");
+    var f=(kit&&kit.file)||{};
+    (f.facts||[]).slice(0,2).forEach(function(fact){ out.push("Is this on the file? Yes or no. "+fact); });
+    var memo=(kit&&kit.memo)||{};
+    (memo.steps||[]).slice(0,3).forEach(function(s){ out.push("Where is the memo on this step? "+s); });
+    out.push("What is the last line of the memo never allowed to be?");
+    return out.length?out:["What did today's paper actually say?"];
+  }
+  function socCall(){
+    var pool=presentNow();
+    if(!pool.length){ window.__socWho=""; return; }
+    var i=(window.__socN||0)%pool.length;
+    window.__socWho=firstLast(pool[i]);
+    window.__socN=i+1;
+  }
+  function socraticHtml(){
+    if(!window.__socWho) socCall();
+    var bank=socraticBank();
+    var q=bank[(window.__socI||0)%bank.length];
+    var slides=deckSlides();
+    var s=slides[(window.__socI||0)%(slides.length||1)]||{};
+    var body=(s.body||[]).slice(0,2).map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join("");
+    return "<h1>SOCRATIC</h1>"+
+      "<p class='cite'>60–75. One present student. One question from today's work.</p>"+
+      "<p class='ask'>"+esc(window.__socWho||"No one is marked present.")+"</p>"+
+      "<p class='prompt'>"+esc(q)+"</p>"+
+      (s.title?("<p class='cite'>Review. "+esc(s.title)+"</p>"):"")+
+      body+
+      "<div class='vote'><button type='button' class='hold' data-soc='call'>CALL</button><button type='button' class='ok' data-soc='next'>NEXT QUESTION</button></div>";
+  }
+  function callCounts(card){
+    var p=(window.LawLive&&LawLive.get&&(LawLive.get().poll))||{};
+    var counts={}, n=0;
+    if(card&&!card.done&&p.id===card.key){
+      Object.keys(p.votes||{}).forEach(function(dev){
+        var c=String(p.votes[dev]);
+        counts[c]=(counts[c]||0)+1;
+        n++;
+      });
+    }
+    return {counts:counts, n:n, locked:!!(window.__callLocked||p.locked)};
+  }
+  function callDeck(){
+    if(window.__callDeck&&window.__callDeck.length) return window.__callDeck;
+    var claims=(window.__rocket&&window.__rocket.claims)||[];
+    if(!claims.length) return [];
+    var blob="";
+    try{ blob=JSON.stringify(kit||{}).toLowerCase(); }catch(e){ blob=""; }
+    var ranked=claims.slice().sort(function(a,b){
+      var ah=blob.indexOf(String(a.id||"").toLowerCase())>=0?0:1;
+      var bh=blob.indexOf(String(b.id||"").toLowerCase())>=0?0:1;
+      return ah-bh;
+    });
+    window.__callDeck=ranked;
+    if(!(window.__callI>=0)) window.__callI=0;
+    return window.__callDeck;
+  }
+  function callCard(){
+    var deck=callDeck();
+    if(!deck.length) return null;
+    var i=window.__callI||0;
+    if(i>=deck.length) return {done:true, n:deck.length};
+    var key=iso+"|"+course+"|"+i;
+    if(window.__callCard&&window.__callCard.key===key) return window.__callCard;
+    var c=deck[i];
+    function line(s){
+      return String(s||"").replace(/\{place\}/g,"the place on the file").replace(/\s+/g," ").trim();
+    }
+    var right=(c.elements||[]).map(function(e){ return e.label; }).filter(Boolean).join(". ");
+    if(right){
+      right=right.charAt(0).toUpperCase()+right.slice(1);
+      if(right.slice(-1)!==".") right+=".";
+    }
+    var wrong=[line(c.decoy), line(c.defenseBad), line(c.notElement)].filter(Boolean);
+    var items=[
+      {text:right||"The elements, in the statute's words.", ok:true},
+      {text:wrong[0]||"The place name is an element.", ok:false},
+      {text:wrong[1]||"A weapon is required.", ok:false},
+      {text:wrong[2]||"Annoyance proves the charge.", ok:false}
+    ];
+    var seed=0, s, j, tmp;
+    for(s=0;s<key.length;s++) seed=(seed*33+key.charCodeAt(s))>>>0;
+    for(s=items.length-1;s>0;s--){
+      seed=(seed*1664525+1013904223)>>>0;
+      j=seed%(s+1);
+      tmp=items[s]; items[s]=items[j]; items[j]=tmp;
+    }
+    var tones=["ice","gold","peach","rose"];
+    var correct="0";
+    items.forEach(function(it, idx){
+      it.id=String(idx);
+      it.tone=tones[idx];
+      if(it.ok) correct=it.id;
+    });
+    window.__callCard={
+      key:key, i:i, n:deck.length, cite:c.cite||"", short:c.short||"",
+      prompt:"Name the elements. One answer is the statute. The other three are not.",
+      items:items, correct:correct
+    };
+    window.__callT0=Date.now();
+    window.__callLocked=false;
+    window.__pollId="";
+    return window.__callCard;
+  }
+  function openCall(card){
+    if(!card||card.done) return;
+    if(window.__pollId===card.key) return;
+    window.__pollId=card.key;
+    fetch("/api/live",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        op:"vote-open",
+        id:card.key,
+        prompt:card.prompt,
+        cite:card.cite,
+        items:card.items.map(function(it){ return {id:it.id, text:it.text, tone:it.tone}; })
+      }),
+      keepalive:true, cache:"no-store"
+    }).catch(function(){});
+  }
+  function lockCall(card){
+    if(!card||card.done||window.__callLocked) return;
+    window.__callLocked=true;
+    fetch("/api/live",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({op:"vote-lock", id:card.key, key:card.correct}),
+      keepalive:true, cache:"no-store"
+    }).catch(function(){});
+  }
+  function callLeft(card){
+    if(!card||card.done||window.__callLocked) return 0;
+    var left=20-Math.floor((Date.now()-(window.__callT0||Date.now()))/1000);
+    if(left<=0){ lockCall(card); return 0; }
+    return left;
+  }
+  function callAdvance(){
+    var deck=callDeck();
+    window.__callI=(window.__callI||0)+1;
+    if(window.__callI>deck.length) window.__callI=deck.length;
+    window.__callCard=null;
+    window.__callLocked=false;
+    window.__pollId="";
+    viewKey="";
+    paint();
+  }
+  function callReset(){
+    window.__callI=0;
+    window.__callCard=null;
+    window.__callLocked=false;
+    window.__pollId="";
+    viewKey="";
+    paint();
+  }
+  function hearingBtn(){
+    var sit=window.LawGames&&LawGames.sitting&&LawGames.sitting(course==="LS"?"LS":"ILS", iso);
+    if(!sit) return "";
+    var label=/mock|hearing/i.test((sit.href||"")+" "+(sit.label||""))?"OPEN THE HEARING":"OPEN ROCKET DOCKET";
+    return "<button type='button' class='ok' data-play='"+esc(sit.id)+"'>"+esc(label)+"</button>";
+  }
+  function callHtml(){
+    if(!window.__rocket){
+      return "<h1>THE CALL</h1><p class='body'>Loading the docket.</p>";
+    }
+    var card=callCard();
+    if(!card) return "<h1>THE CALL</h1><p class='body'>No charges on the docket.</p>";
+    if(card.done){
+      return "<div class='docket call'><h1>THE CALL</h1><p class='prompt'>That is the docket.</p><p class='cite'>One answer was the statute. The other three were not.</p><div class='vote'><button type='button' class='ok' data-call='reset'>RUN IT BACK</button>"+hearingBtn()+"</div></div>";
+    }
+    openCall(card);
+    var left=callLeft(card);
+    var tv=callCounts(card);
+    var locked=tv.locked||left===0;
+    var hit=locked?(tv.counts[card.correct]||0):0;
+    var bars=card.items.map(function(it){
+      var mark=locked&&it.id===card.correct?" key":"";
+      var n=locked?(tv.counts[it.id]||0):"";
+      return "<div class='opt "+it.tone+mark+"'><b>"+esc(it.text)+"</b><em>"+(locked?n:"")+"</em></div>";
+    }).join("");
+    var verdict=locked?("<p class='ask'>"+hit+" OF "+tv.n+" ON THE STATUTE</p>"):"";
+    var buttons=locked
+      ? "<div class='vote'><button type='button' class='ok' data-call='next'>NEXT</button>"+hearingBtn()+"</div>"
+      : "<div class='vote'><button type='button' data-call='lock'>LOCK</button>"+hearingBtn()+"</div>";
+    var phone="<aside class='pocketqr'><img src='/vote-qr.svg' alt='Vote QR'><b>PHONES</b><small>ituxpro.local:8080/vote.html</small><p class='cite'>"+(locked?"KEY IS UP":"TAP ONE. CHANGE IT UNTIL THE TIMER ENDS.")+"</p></aside>";
+    return "<div class='docket call'><h1>THE CALL</h1><p class='score'>ROUND "+(card.i+1)+" / "+card.n+" · "+(locked?"KEY":(left+"s"))+" · "+tv.n+" TAPS</p><p class='prompt'>"+esc(card.prompt)+"</p><p class='cite'>"+esc(card.cite)+(card.short?(" · "+esc(card.short)):"")+"</p><div class='bars'>"+bars+"</div>"+verdict+buttons+phone+"</div>";
+  }
+  function announceName(spoken){
+    if(!SAY||!window.speechSynthesis||!spoken) return;
+    try{
+      var u=new SpeechSynthesisUtterance(spoken);
+      u.rate=0.92;
+      u.lang="en-US";
+      SAY(u);
+    }catch(e){}
+  }
+  function printCalled(raw){
+    var ph=LawKit.phase()||{};
+    if(["read","brief","model"].indexOf(ph.id)<0||course==="PLAN"||!kit||!raw) return;
+    if(!presentNow().some(function(n){ return normName(n)===normName(raw); })) return;
+    var snap=(window.LawPeriod&&LawPeriod.snapshot&&LawPeriod.snapshot())||{};
+    var per=String(ph.period||lastPeriod||snap.period||"");
+    var lock="lawlab.callprint|"+iso+"|"+course+"|"+per+"|"+normName(raw);
+    try{ if(sessionStorage.getItem(lock)==="1") return; }catch(e){}
+    var spoken=firstLast(raw);
+    if(!spoken) return;
+    try{ sessionStorage.setItem(lock,"1"); }catch(e2){}
+    announceName(spoken);
+    var whoEl=document.getElementById("ccWho");
+    if(whoEl) whoEl.textContent=spoken;
+    fetch("/api/print",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        kind:"script",
+        slot:"call",
+        title:"READ THIS",
+        name:spoken,
+        spoken:spoken,
+        iso:iso,
+        course:course,
+        period:per,
+        script:readerScript(spoken)
+      }),
+      keepalive:true,
+      cache:"no-store"
+    }).catch(function(){});
+  }
+  window.LawOnCall=printCalled;
+  function callLeader(){
+    if(course==="PLAN"||!kit) return "";
+    var ph=LawKit.phase()||{};
+    if(ph.id!=="guide" && ph.id!=="handoff") return "";
+    var snap=(window.LawPeriod&&LawPeriod.snapshot&&LawPeriod.snapshot())||{};
+    var per=String(ph.period||lastPeriod||snap.period||"");
+    var key="lawlab.guide1|"+iso+"|"+course+"|"+per;
+    try{
+      var prev=sessionStorage.getItem(key);
+      if(prev){ leaderSpoken=prev; return prev; }
+    }catch(e){}
+    var pool=presentNow();
+    if(!pool.length){
+      leaderSpoken="";
+      window.__leadNote="Waiting on the roll. Only a student marked present in "+(classSection()||"this class")+" leads.";
+      return "";
+    }
+    var raw=pool[Math.floor(Math.random()*pool.length)];
+    var spoken=firstLast(raw);
+    if(!spoken) return "";
+    leaderSpoken=spoken;
+    try{ sessionStorage.setItem(key, spoken); }catch(e2){}
+    announceName(spoken);
+    window.__leadNote="Printing "+spoken+" on the thermal…";
+    fetch("/api/print",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        kind:"script",
+        slot:"lead",
+        title:"READ THIS",
+        name:spoken,
+        spoken:spoken,
+        iso:iso,
+        course:course,
+        period:per,
+        script:readerScript(spoken)
+      }),
+      keepalive:true,
+      cache:"no-store"
+    }).then(function(r){ return r.json().catch(function(){ return {}; }); }).then(function(j){
+      window.__leadNote=(j&&j.ok)?((j.skipped?"Tape already out · ":"Tape out · ")+spoken):("Tape did not take it"+(j&&j.error?(" · "+j.error):""));
+      if((LawKit.phase()||{}).id==="guide" || (LawKit.phase()||{}).id==="handoff"){ viewKey=""; paint(); }
+    }).catch(function(){ window.__leadNote="Thermal did not answer."; });
+    return spoken;
+  }
+  function wrapHtml(){
+    var db=(kit&&kit.dayBrief)||{};
+    var wed=db.kind==="nals" || (window.LawKit&&LawKit.isWed&&LawKit.isWed());
+    var lines=[];
+    if(wed){
+      var r=kit.reader||{};
+      lines.push("Stop. Wednesday is the textbook. There is no case brief.");
+      lines.push("You read " + (r.source || "today's section") + (r.pages && String(r.source || "").indexOf(String(r.pages)) < 0 ? (" " + r.pages) : "") + ". Stop where it stops.");
+      lines.push("What you wrote comes from that sitting only.");
+      lines.push("Last line is never advice.");
+    } else {
+      var c=db.case||{};
+      var f=kit.file||{};
+      if(c.name) lines.push("Today's brief is "+c.name+(c.cite?(", "+c.cite):"")+".");
+      if(c.point) lines.push(c.point);
+      if(db.statute&&db.statute.cite && db.role!=="statute") lines.push("The statute next to it is "+db.statute.cite+".");
+      if(f.client) lines.push("The file is "+f.client+(f.number?(" "+f.number):"")+(f.chargeLine?(". "+f.chargeLine):"")+".");
+      lines.push("Same and different stay on the paper. Do not add facts. Do not draft a motion. Last line is never advice.");
+    }
+    return "<h1>WRAP</h1><p class='cite'>Teacher. Last 5 minutes. Say these. Then the bell.</p>"+
+      lines.map(function(t,i){ return "<p class='ask'>"+(i+1)+". "+esc(t)+"</p>"; }).join("");
+  }
+  function paint(){
+    if(conferenceOn()){ paintConference(); return; }
+    document.body.classList.remove("conf");
+    var confMain=document.getElementById("main");
+    if(confMain) confMain.classList.remove("one");
+    var ph=LawKit.phase();
+    document.getElementById("clk").textContent=ph.clock;
+    document.getElementById("ph").textContent=ph.label;
+    document.getElementById("head").textContent=course+" · "+ph.label;
+    var callbar=document.getElementById("callbar");
+    if(callbar) callbar.style.display=(!manual && ph.id==="socratic")?"flex":"none";
+    if(ph.period && lastPeriod==="") lastPeriod=ph.period;
+    else if(ph.period && ph.period!==lastPeriod){
+      lastPeriod=ph.period; spoken=false; mailShown=false; mailPrinted=false; slide=0; viewKey=""; manual=false; manualPhase=""; letterHold=false; rangKey=""; ringTries=0; watchOn=false; watchI=-1;
+      if(window.LawMailPing && LawMailPing.reset) LawMailPing.reset();
+    }
+    if(manual && manualPhase && ph.id!==manualPhase){ manual=false; manualPhase=""; }
+    if(letterHold && letterPhase && ph.id!==letterPhase) letterHold=false;
+    ringOnce(false);
+    if(kit && ph.id==="read") printCaseRead();
+    if(kit && (ph.id==="guide" || ph.id==="handoff")) callLeader();
+    if(kit && ph.id==="wrap") printWrapTape();
+    var main=document.getElementById("main");
+    if(watchOn){
+      document.getElementById("sub").textContent="WATCH";
+      var list=vidList();
+      var vkey="watch|"+watchI+"|"+course+"|"+(list.length||0);
+      if(vkey===viewKey) return;
+      viewKey=vkey;
+      if(!(watchI>=0)){
+        setStage("<h1>WATCH</h1><p class='cite'>Tap a tape. BACK returns to slides. NEXT opens the first tape.</p>"+
+          list.map(function(v,i){
+            return "<button type='button' class='vtape' data-vid='"+i+"'><b>"+(v.title||("Tape "+(i+1)))+"</b><small>"+(v.mins||"board brief")+"</small></button>";
+          }).join("")+
+          (list.length?"":"<p class='body'>No tapes for this period.</p>"));
+        return;
+      }
+      var v=list[watchI]||list[0]||{title:"Tape",say:["No tape loaded."],ask:""};
+      var say=(v.say||["Read the title. Answer the ask."]).map(function(p){ return "<p class='body'>"+p+"</p>"; }).join("");
+      var media=v.mp3?("<audio class='game' controls autoplay src='"+v.mp3+"'></audio>"):"";
+      var tape=v.file?("<video class='open-art' controls autoplay src='"+v.file+"'></video>"):"";
+      setStage("<h1>"+(v.title||"WATCH")+"</h1>"+media+say+"<p class='ask'>"+(v.ask||"")+"</p>"+
+        "<p class='cite'>BACK = list. NEXT = next tape. WATCH again to leave.</p>", tape);
+      return;
+    }
+    if(ph.id==="closed"||ph.id==="after"||ph.id==="lunch"||ph.id==="plan"){
+      var snap=(window.LawPeriod&&LawPeriod.snapshot&&LawPeriod.snapshot())||{};
+      var nxt="";
+      var map=snap.map||{};
+      ["1","2","3","4"].forEach(function(pid){
+        if(nxt) return;
+        var c=map[pid];
+        if(c && c!=="PLAN" && Number(pid)>Number(snap.period||0)) nxt=" Next is P"+pid+" "+c+".";
+      });
+      var hold={
+        closed:"<h1>"+(ph.label||"CLOSED")+"</h1><p class='body'>No class. The board waits.</p>",
+        after:"<h1>AFTER SCHOOL</h1><p class='body'>Night clerk can grind. Students are gone.</p>",
+        lunch:"<h1>LUNCH</h1><p class='body'>Second floor first lunch. Board holds. P3 starts 11:53.</p>",
+        plan:"<h1>PLANNING</h1><p class='body'>No student lead this period."+nxt+"</p>"
+      };
+      setStage(hold[ph.id]||("<h1>"+ph.label+"</h1>"));
+      return;
+    }
+    if(ph.id==="pass"||ph.id==="before"){
+      if(!kit && course && course!=="PLAN"){
+        setStage("<h1>"+(course||"ILS")+"</h1><p class='body'>Loading the title card…</p>", pocketBox());
+        LawKit.load(course, iso).then(function(j){ if(j){ kit=j; viewKey=""; paint(); }});
+        return;
+      }
+      var tc=titleCardHtml(); setStage(tc.copy, tc.art);
+      return;
+    }
+    if(!kit){
+      setStage("<p class='cite'>Loading today's kit…</p><p class='body'>"+(course||"—")+" · "+(iso||"—")+"</p>");
+      if(course && course!=="PLAN"){
+        LawKit.load(course, iso).then(function(j){ if(j){ kit=j; viewKey=""; paint(); pushLead(); }});
+      }
+      return;
+    }
+    var plan=kit.plan||{};
+    document.getElementById("sub").textContent=(plan.title||iso);
+    var q=new URLSearchParams(location.search).get("play");
+    var vi=new URLSearchParams(location.search).get("v");
+    var liveSig="";
+    if(ph.id==="play"){
+      var card0=callCard();
+      var left0=callLeft(card0);
+      var tc0=callCounts(card0);
+      liveSig="|"+(window.__callI||0)+"|"+left0+"|"+tc0.n+"|"+(tc0.locked?1:0)+"|"+JSON.stringify(tc0.counts);
+    }
+    if(ph.id==="socratic") liveSig="|"+(window.__socI||0)+"|"+(window.__socWho||"");
+    var key=ph.id+"|"+(q||"")+"|"+(vi||"")+"|"+slide+"|"+course+"|"+iso+"|"+(manual?"m":"a")+"|"+(mailShown?"mail":"")+liveSig;
+    if(!manual && (ph.id==="guide" || ph.id==="handoff") && kit){
+      var beforeLead=leaderSpoken;
+      var gotLead=callLeader();
+      if(gotLead && gotLead!==beforeLead) viewKey="";
+    }
+    if(key===viewKey) return;
+    viewKey=key;
+    var games=(window.LawGames&&LawGames.choices(course,iso))||[];
+    if(q){
+      var pick=null;
+      var sitNow=window.LawGames&&LawGames.sitting&&LawGames.sitting(course==="LS"?"LS":"ILS", iso);
+      var all=games.slice();
+      if(sitNow) all.unshift({id:sitNow.id, href:sitNow.href, label:sitNow.label});
+      all.push({id:"rocket", href:"rocket-docket.html", label:"ROCKET DOCKET"});
+      all.push({id:"mock", href:"mock-trial.html", label:"MOCK TRIAL"});
+      for(var gi=0; gi<all.length; gi++){ if(all[gi].id===q){ pick=all[gi]; break; } }
+      if(pick){
+        var ep=(kit.firm285&&(kit.firm285.episode_id||kit.firm285.file))||"";
+        var src=pick.href.replace(/^\//,"");
+        src += (src.indexOf("?")>=0?"&":"?")+"course="+encodeURIComponent(course)+"&date="+encodeURIComponent(iso)+"&ep="+encodeURIComponent(ep);
+        setStage("<iframe class='game' title='"+pick.label+"' src='/"+src+"'></iframe>");
+        return;
+      }
+    }
+    if(letterHold && !watchOn){
+      setStage(memoHtml(), pocketBox());
+      return;
+    }
+    if(!manual && (ph.id==="entry" || ph.id==="quiz")){
+      var tc=titleCardHtml(); setStage(tc.copy, tc.art);
+      return;
+    }
+    if(!manual && ph.id==="read"){
+      setStage(caseReadHtml(), pocketBox());
+      return;
+    }
+    if(!manual && ph.id==="huddle" && kit.reader && window.LawKit && LawKit.isWed && LawKit.isWed()){
+      setStage(chapterHtml());
+      return;
+    }
+    if(!manual && ph.id==="bridge"){
+      var r=(window.LawKit&&LawKit.research)?LawKit.research(kit):{};
+      setStage("<h1>QUIZ IS IN</h1>"+
+        "<p class='body'>Chromebooks stay open. Next is the library warmup — before the mail.</p>"+
+        "<p class='ask'>Search: <b>"+(r.q||"the brief")+"</b></p>"+
+        "<p class='body'>"+(r.ask||"Copy one sentence from the brief. Not from the email.")+"</p>"+
+        "<p class='cite'>"+(r.cite||"")+" · You've Got Mail comes after. This board does not move.</p>");
+      return;
+    }
+    if(!manual && ph.id==="lib"){
+      var r=(window.LawKit&&LawKit.research)?LawKit.research(kit):{};
+      setStage("<h1>LIBRARY WARMUP</h1>"+
+        "<p class='cite'>"+(r.cite||"Look it up")+"</p>"+
+        "<p class='body'>"+(r.why||"Look it up before the mail. The email is not the law.")+"</p>"+
+        "<p class='ask'>"+(r.ask||"Copy one sentence from the brief.")+"</p>"+
+        "<p class='body'>"+(r.copy||"One sentence from the library. Then one file fact.")+"</p>"+
+        "<p class='cite'>Chromebooks: LIBRARY. Search <b>"+(r.q||"")+"</b>. Copy the sentence. You've Got Mail is next. This board stays here.</p>");
+      return;
+    }
+    if(!manual && ph.id==="exit"){
+      var r=kit.reader||{};
+      var qs=(r.questions||[]).map(function(q,i){ return "<p class='ask'>"+(i+1)+". "+q+"</p>"; }).join("");
+      setStage("<h1>EXIT FROM THE READING</h1><p class='body'>Answer from today's sitting only. Turn in before the bell. No new lecture.</p>"+(qs||"<p class='ask'>What did the excerpt actually say?</p>"));
+      return;
+    }
+    if(!manual && ph.id==="mail"){
+      var court = window.LawGames && ((LawGames.sitting && LawGames.sitting(course==="LS"?"LS":"ILS", iso)) || (LawGames.courtDay && !LawGames.sitting && LawGames.courtDay(course==="LS"?"LS":"ILS", iso)));
+      var story=clientStoryHtml();
+      if(court) story=story.replace("<h1>YOU'VE GOT MAIL</h1>","<h1>ALL RISE</h1>");
+      setStage(story, clientFace((kit.file||{}).client) || pocketBox());
+      return;
+    }
+    if(!manual && ph.id==="huddle"){
+      var r=kit.reader;
+      if(r){
+        var para=String(r.chunk||r.excerpt||"").replace(/\bticklers\b/ig,"reminders").replace(/\btickler\b/ig,"reminder");
+        setStage("<h1>WEDNESDAY READER</h1><p class='cite'>"+(r.source||"")+(r.pages?(" · pp. "+r.pages):"")+"</p><p class='body'><b>"+(r.title||"")+"</b></p><p class='body'>"+para+"</p><p class='ask'>"+((r.questions&&r.questions[0])||"What did the paragraph actually say?")+"</p>"+(r.continue_in?("<p class='cite'>Not done: "+r.continue_in+"</p>"):""));
+        return;
+      }
+      setStage("<h1>BRAINSTORM</h1><p class='body'>What do we actually know? What do we need? Three facts. One question. NEXT opens the slides.</p>"); return;
+    }
+    if(!manual && ph.id==="model"){
+      setStage(modelHtml(), pocketBox());
+      return;
+    }
+    if(!manual && (ph.id==="guide" || ph.id==="handoff")){
+      callLeader();
+      setStage(guideHtml(), pocketBox());
+      return;
+    }
+    if(!manual && ph.id==="socratic"){
+      setStage(socraticHtml());
+      return;
+    }
+    if(!manual && ph.id==="do"){
+      setStage(workHtml(), pocketBox());
+      return;
+    }
+    if(!manual && ph.id==="play"){
+      setStage(callHtml());
+      return;
+    }
+    if(!manual && ph.id==="wrap"){
+      setStage(wrapHtml());
+      return;
+    }
+    if(!manual && ph.id==="game"){
+      setStage("<h1>LAST 15 · THE CALL</h1><p class='cite'>"+(games[0]&&games[0].client?("Today’s file: "+games[0].client+" · "+(games[0].note||"")):"Firm 285 is always here. Hearing and trial days open the real call.")+"</p><div class='row'>"+
+        games.map(function(g){ return "<button type='button' class='ok' data-play='"+g.id+"'><b>"+g.label+"</b><br><small>"+(g.note||"")+"</small></button>"; }).join("")+
+        "</div>");
+      return;
+    }
+    var slides=deckSlides();
+    if(!slides.length){
+      var purpose = (window.LawKit && LawKit.purpose) ? LawKit.purpose(plan) : (plan.purpose||"");
+      setStage("<h1>"+(plan.title||"Lecture")+"</h1><p class='body'>"+(plan.objective||"")+"</p>"+(purpose?("<p class='cite'><b>Purpose.</b> "+purpose+"</p>"):""));
+      return;
+    }
+    if(!(slide>=0)) slide=0;
+    if(slide>=slides.length) slide=slides.length-1;
+    var s=slides[slide]||{title:plan.title||"Slide",body:[plan.objective||""],ask:""};
+    var frames=Array.isArray(s.frames)?s.frames.slice():[];
+    if(!frames.length && s.shots) frames=s.shots.map(function(src){ return {src:src, cap:""}; });
+    if(!frames.length && slide===0){
+      var art0=(gpu().slide || ("/night-clerk/openers/"+course+"-"+iso+".jpg"));
+      if(art0) frames=[{src:art0, cap:""}];
+    }
+    var o=(slide===0 && gpu().opener) ? "<p class='cite'>"+gpu().opener+"</p>" : "";
+    var shots=frameHtml(frames);
+    var extra=(gpu().asks&&gpu().asks[slide]) ? "<p class='ask'>"+gpu().asks[slide]+"</p>" : "";
+    var purpose=(slide===0 && window.LawKit && LawKit.purpose) ? LawKit.purpose(plan) : "";
+    var purp=purpose ? "<p class='cite'><b>Purpose.</b> "+purpose+"</p>" : "";
+    var rail=(slide===0?pocketBox():"")+shots;
+    var teacher=(ph.id==="brief")?"<p class='cite'>COLD CALL IS OPEN. Present students only. You keep NEXT.</p>":"";
+    setStage(
+      "<h1>"+esc(s.title||("Slide "+(slide+1)))+"</h1>"+teacher+o+purp+"<div class='body'>"+(s.body||[]).map(function(t){return "<p>"+esc(t)+"</p>";}).join("")+"</div>"+(s.ask?"<p class='ask'>"+esc(s.ask)+"</p>":"")+extra,
+      rail,
+      frames.length>0
+    );
+  }
+  function reload(){
+    var c=LawKit.courseNow(), d=LawKit.iso();
+    var snap=(window.LawPeriod && LawPeriod.snapshot && LawPeriod.snapshot())||{};
+    var p=String(snap.period||"");
+    if(c==="PLAN"){
+      course=c; iso=d;
+      paint(); return;
+    }
+    if(c===course && d===iso && kit && String(kit.course||c)===c) { paint(); return; }
+    var samePeriod = d===iso && p && p===String(lastPeriod);
+    course=c; iso=d; kit=null; overlay=null; viewKey="";
+    if(!samePeriod){ spoken=false; mailShown=false; mailPrinted=false; slide=0; manual=false; manualPhase=""; letterHold=false; rangKey=""; ringTries=0; watchOn=false; watchI=-1; if(window.LawMailPing&&LawMailPing.reset) LawMailPing.reset(); }
+    loadOverlay();
+    LawKit.load(course, iso).then(function(j){ kit=j; paint(); pushLead(); });
+  }
+  document.getElementById("main").addEventListener("click", function(e){
+    var t=e.target.closest("[data-vid]");
+    if(t){ openWatch(t.getAttribute("data-vid")); return; }
+    var dock=e.target.closest("[data-call]");
+    if(dock){
+      var act=dock.getAttribute("data-call");
+      if(act==="next") callAdvance();
+      else if(act==="reset") callReset();
+      else if(act==="lock"){ lockCall(callCard()); viewKey=""; paint(); }
+      return;
+    }
+    var soc=e.target.closest("[data-soc]");
+    if(soc){
+      var how=soc.getAttribute("data-soc");
+      if(how==="call") socCall();
+      else window.__socI=(window.__socI||0)+1;
+      viewKey="";
+      paint();
+      return;
+    }
+    if(e.target.closest("[data-openwatch]")){ openWatch(-1); return; }
+    var b=e.target.closest("[data-play]"); if(!b) return;
+    goPlay(b.getAttribute("data-play"));
+  });
+  document.getElementById("menuout").onclick=function(){ location.href="menu.html"+atq(); };
+  function pushLead(){
+    try{ if(window.LawLive && LawLive.setLead) LawLive.setLead(slide, course, iso); }catch(e){}
+  }
+  function sameCourse(a,b){
+    a=String(a||""); b=String(b||"");
+    if(!a||!b) return true;
+    if(a===b) return true;
+    return (a==="LS"||a.indexOf("LS")===0) && (b==="LS"||b.indexOf("LS")===0);
+  }
+  function pullLead(){ /* OneScreen is master. Teleprompter follows. */ }
+  function stepSlide(d){
+    var phNow=(window.LawKit&&LawKit.phase&&LawKit.phase())||{};
+    if(!watchOn && (phNow.id==="quiz" || phNow.id==="entry")) return;
+    if(window.LawMailPing && LawMailPing.dismiss) LawMailPing.dismiss();
+    mailShown=true;
+    spoken=true;
+    letterHold=false;
+    if(watchOn){
+      var list=vidList();
+      if(!(watchI>=0)){ openWatch(d>0?0:list.length-1); return; }
+      var n=list.length||1;
+      watchI=Math.max(0, Math.min(n-1, watchI+d));
+      viewKey=""; paint(); return;
+    }
+    manual=true;
+    manualPhase=(LawKit.phase()||{}).id||"";
+    var slides=deckSlides();
+    var n=slides.length||1;
+    if(!(slide>=0)) slide=0;
+    slide=Math.max(0, Math.min(n-1, slide+d));
+    viewKey="";
+    paint();
+    pushLead();
+  }
+  document.getElementById("back").onclick=function(){
+    if(watchOn && watchI>=0){ openWatch(-1); return; }
+    if(watchOn){ closeWatch(); return; }
+    var u=new URL(location.href);
+    if(u.searchParams.get("play")){
+      u.searchParams.delete("play"); history.replaceState({},"",u); viewKey=""; paint(); return;
+    }
+    stepSlide(-1);
+  };
+  document.getElementById("next").onclick=function(){ stepSlide(1); };
+  document.addEventListener("keydown", function(e){
+    if(e.target && (e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")) return;
+    var k=e.key;
+    if(k==="ArrowRight"||k==="PageDown"||k===" "||k==="n"||k==="N"||k==="Enter"){ e.preventDefault(); stepSlide(1); }
+    if(k==="ArrowLeft"||k==="PageUp"||k==="b"||k==="B"){ e.preventDefault(); stepSlide(-1); }
+    if(k==="w"||k==="W"){ e.preventDefault(); if(watchOn) closeWatch(); else openWatch(-1); }
+    if(k==="m"||k==="M"){ e.preventDefault(); location.href="office.html?course="+course+atq(); }
+    if(k==="Escape"){ e.preventDefault(); location.href="menu.html"+atq(); }
+  });
+  var lastRemoteAt=0;
+  function runRemote(cmd){
+    cmd=String(cmd||"");
+    if(cmd==="next") stepSlide(1);
+    else if(cmd==="back") stepSlide(-1);
+    else if(cmd==="watch"){ if(watchOn) closeWatch(); else openWatch(-1); }
+    else if(cmd==="mail"){ ygm(true); }
+    else if(cmd==="call") location.href="clerk-call.html";
+    else if(cmd==="menu") location.href="menu.html"+atq();
+    else if(cmd==="prompter") location.href="prompter.html?course="+course+"&date="+iso+atq();
+  }
+  function pullRemote(){
+    try{
+      if(!window.LawLive || !LawLive.remote) return;
+      var r=LawLive.remote()||{};
+      if(!r.at || r.at===lastRemoteAt) return;
+      lastRemoteAt=r.at;
+      runRemote(r.cmd);
+    }catch(e){}
+  }
+  document.getElementById("mail").onclick=function(){ ygm(true); };
+  document.getElementById("prompter").onclick=function(){ location.href="prompter.html?course="+course+"&date="+iso+atq(); };
+  document.getElementById("watch").onclick=function(){ if(watchOn) closeWatch(); else openWatch(-1); };
+  var wh=document.getElementById("watchhead");
+  if(wh) wh.onclick=function(){ if(watchOn) closeWatch(); else openWatch(-1); };
+  function goCall(){ location.href="clerk-call.html"; }
+  var ch=document.getElementById("callhead"); if(ch) ch.onclick=goCall;
+  var cb=document.getElementById("callbtn"); if(cb) cb.onclick=goCall;
+  fetch("data/rocket-docket.json",{cache:"no-store"}).then(function(r){ return r.ok?r.json():null; }).then(function(j){
+    if(j&&j.claims){ window.__rocket=j; window.__callDeck=null; window.__callCard=null; viewKey=""; paint(); }
+  }).catch(function(){});
+  function liveNames(){
+    var snap = (window.LawPeriod && LawPeriod.snapshot && LawPeriod.snapshot()) || {};
+    var sec = snap.course || snap.section || "";
+    if (sec==="LS") {
+      var map = snap.map || {};
+      sec = map[snap.period] || (String(snap.period)==="1" ? "LS-1" : "LS-2");
+    }
+    if (!sec || sec==="PLAN") sec = (course==="LS" ? "LS-1" : "ILS");
+    var roster = (window.LawRoster && LawRoster.forCourse) ? (LawRoster.forCourse(sec) || []) : [];
+    if (window.LawCall && LawCall.hereOnly) return LawCall.hereOnly(roster, sec);
+    return [];
+  }
+  function getAsk(){
+    var pack = overlay && overlay.courses && (overlay.courses[course] || overlay.courses.LS || overlay.courses.ILS);
+    var calls = pack && pack.calls;
+    if (calls && calls.length){
+      var row = calls[slide % calls.length] || {};
+      return row.q || row.ask || "";
+    }
+    if (!kit) return "";
+    var slides = deckSlides();
+    var s = slides[slide] || {};
+    return s.ask || "";
+  }
+  try {
+    if (window.LawCall) LawCall.mount(
+      document.getElementById("callbar"),
+      document.getElementById("callflash"),
+      liveNames,
+      function(){ return course; },
+      function(){ return iso; },
+      getAsk
+    );
+  } catch (e) {}
+  try {
+    var boot=new URL(location.href);
+    if(boot.searchParams.get("play")==="video"){
+      boot.searchParams.delete("play"); boot.searchParams.delete("v");
+      history.replaceState({},"",boot);
+    }
+  } catch (e2) {}
+  LawKit.load(course, iso).then(function(j){ kit=j; paint(); pushLead(); });
+  loadOverlay();
+  setInterval(reload,1000);
+  if(window.LawLive && LawLive.watch) LawLive.watch(function(){ pullRemote(); }, 400);
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function(){});
+})();
+</script>
+</body>
+</html>
