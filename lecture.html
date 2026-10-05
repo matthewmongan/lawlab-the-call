@@ -335,35 +335,16 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
   }
   function mailTapeText(){
     var m=(kit&&kit.memo)||{};
-    var f=(kit&&kit.file)||{};
-    var notes=(kit&&kit.notes)||{};
-    var day=(kit&&kit.day)||{};
     var lines=[];
     var body=String(m.body||"").trim();
     if(body) lines.push(body);
     if(m.task){ lines.push(""); lines.push("TASK"); lines.push(String(m.task)); }
-    var thermal=day.thermal||notes.thermal||[];
-    if(thermal.length){
-      lines.push("");
-      lines.push("ON THE SLIP");
-      thermal.forEach(function(s){ lines.push(String(s)); });
-    }
     (m.steps||[]).forEach(function(s,i){
       if(i===0){ lines.push(""); lines.push("STEPS"); }
       lines.push(String(s));
     });
-    (f.docs||[]).forEach(function(d){
-      var title=String((d&&d.title)||(d&&d.kind)||"PAPER");
-      var text=String((d&&d.text)||"").trim();
-      if(!text) return;
-      lines.push("");
-      lines.push(title.toUpperCase());
-      lines.push(text);
-    });
-    (f.facts||[]).forEach(function(s,i){
-      if(i===0){ lines.push(""); lines.push("FACTS ON THE FILE"); }
-      lines.push("• "+String(s));
-    });
+    lines.push("");
+    lines.push("Last line is never advice.");
     return lines.join("\n");
   }
   function printPackets(force){
@@ -689,6 +670,11 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       var memo=(kit&&kit.memo)||{};
       if(memo.task) lines.push(String(memo.task));
       (memo.steps||[]).forEach(function(s){ lines.push(String(s)); });
+    }
+    var assign=(kit&&kit.memo)||{};
+    if(db.case || (db.kind==="pair" && db.fed)){
+      if(assign.task) lines.push("Assignment. "+assign.task);
+      (assign.steps||[]).slice(0,5).forEach(function(s){ lines.push(String(s)); });
     }
     lines.push("Last line is never advice. A question about what the client should do goes to the partner.");
     return lines.join("\n");
@@ -1145,6 +1131,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     if(manual && manualPhase && ph.id!==manualPhase){ manual=false; manualPhase=""; }
     if(letterHold && letterPhase && ph.id!==letterPhase) letterHold=false;
     ringOnce(false);
+    if(kit && ph.id==="mail") printPackets(false);
     if(kit && ph.id==="read") printCaseRead();
     if(kit && (ph.id==="guide" || ph.id==="handoff")) callLeader();
     if(kit && ph.id==="wrap") printWrapTape();
