@@ -1,0 +1,24 @@
+/* Light board. Dark type. Pantone fills stay on the controls. */
+@media screen {
+  :root {
+    --bg: #f6f1e7;
+    --ink: #1a140e;
+    --head: #9a3412;
+    --quiet: #1e3a5f;
+    --peach: #ffcc99;
+    --gold: #ff9900;
+    --orange: #f7ae45;
+    --ice: #99ccff;
+    --ok: #99cc99;
+    --lilac: #cc99cc;
+    --rose: #cc6666;
+    --sand: #cccc9a;
+    --violet: #9999ff;
+  }
+  html, body {
+    background: #f6f1e7 !important;
+    color: #1a140e !important;
+  }
+  h1, h2, h3 { color: #9a3412; }
+  .cite, .ask, figcaption { color: #1e3a5f; }
+}
