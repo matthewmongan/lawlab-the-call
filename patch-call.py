@@ -61,7 +61,7 @@ NEW = '''    elif kind == "vote-open":
 def main():
     srv = ROOT / "docs" / "lcars-server.py"
     text = srv.read_text()
-    if 'elif kind == "vote-lock":' in text:
+    if 'elif kind == "vote-lock":' in text and '"items"' in text[text.find("vote-open"):text.find("vote-open")+800]:
         print("server already has The Call")
     else:
         start = text.find('    elif kind == "vote-open":')
@@ -80,6 +80,9 @@ def main():
     kt = kit.read_text()
     kt2 = kt.replace(
         '{ id: "play", start: socEnd, end: len, label: "PHONE VOTE" }',
+        '{ id: "play", start: socEnd, end: len, label: "THE CALL" }',
+    ).replace(
+        '{ id: "play", start: socEnd, end: len, label: "HOLD OR FOLD" }',
         '{ id: "play", start: socEnd, end: len, label: "THE CALL" }',
     )
     if kt2 != kt:
