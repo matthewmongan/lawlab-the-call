@@ -177,23 +177,23 @@
       "choices": [
         "provide a lawyer for that felony case",
         "provide a lawyer only if the charge is capital",
-        "let the student tell him how to plead",
-        "move the case to federal court because he cannot pay"
+        "move the case to federal court because he cannot pay",
+        "wait until after the verdict"
       ],
       "answer": 0,
       "topic": "criminal",
       "level": 3
     },
     {
-      "stem": "That same man asks you, 'So do I plead guilty?' The last line you may write is",
+      "stem": "Gideon does not decide a five-day school suspension. That problem is",
       "choices": [
-        "I will give your question to the partner.",
-        "Plead not guilty. That is safer.",
-        "You will win if you stay quiet.",
-        "Waive the lawyer and go faster."
+        "Goss: notice and a chance to be heard",
+        "a jury in District Court",
+        "a commissioner setting bail",
+        "the felony-trial rule"
       ],
       "answer": 0,
-      "topic": "upl",
+      "topic": "process",
       "level": 3
     },
     {
@@ -262,7 +262,7 @@
         "Maryland's due-process sentence",
         "the federal felony-counsel case",
         "a school-suspension form",
-        "permission for a student to give advice"
+        "the charging document"
       ],
       "answer": 0,
       "topic": "sources",
@@ -285,7 +285,7 @@
       "choices": [
         "an accusation, not a conviction",
         "the jury's verdict",
-        "advice from the partner",
+        "the sentence",
         "proof beyond a reasonable doubt by itself"
       ],
       "answer": 0,
@@ -298,7 +298,7 @@
         "stop the talk and take it back to the file",
         "finish the story so the class can help",
         "post it for the next period",
-        "text it to a friend who is good at law"
+        "leave it for the next class to finish"
       ],
       "answer": 0,
       "topic": "privilege",
@@ -323,8 +323,8 @@
       "choices": [
         "requires the State to furnish a lawyer at that initial appearance",
         "requires a lawyer only at the felony trial",
-        "lets you tell him whether to post bail",
-        "applies only to school suspensions"
+        "applies only to school suspensions",
+        "applies only after a jury verdict"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -348,22 +348,22 @@
         "is not cured by the later hearing",
         "is cured, because he has a lawyer now",
         "turns the case civil",
-        "means he must plead guilty"
+        "means the bail was illegal to set"
       ],
       "answer": 0,
       "topic": "criminal",
       "level": 3
     },
     {
-      "stem": "Andre asks, 'Should I waive the lawyer so I can go home?' You write",
+      "stem": "Article 24, in DeWolfe, is doing the work of",
       "choices": [
-        "I will give your question to the partner.",
-        "Yes. Waive it.",
-        "No. Never waive.",
-        "Post the bail. That is not advice."
+        "Maryland due process at the commissioner",
+        "the Sixth Amendment's exact words",
+        "a school-suspension rule",
+        "the charging document"
       ],
       "answer": 0,
-      "topic": "upl",
+      "topic": "sources",
       "level": 3
     },
     {
@@ -432,7 +432,7 @@
         "the legislature's written rule",
         "whatever the client remembers",
         "the hallway version",
-        "advice"
+        "the caption"
       ],
       "answer": 0,
       "topic": "sources",
@@ -455,8 +455,8 @@
       "choices": [
         "named, dated, and housed",
         "read aloud in the hallway",
-        "turned into advice",
-        "sent to federal court"
+        "sent to federal court",
+        "left in the commissioner's room"
       ],
       "answer": 0,
       "topic": "file",
@@ -465,15 +465,15 @@
   ],
   "2026-10-07": [
     {
-      "stem": "Wednesday is the textbook. A client still asks what he should do. You",
+      "stem": "Wednesday is the textbook. You were told to stop at the end of the section. You",
       "choices": [
-        "give the question to the partner. The book does not make it your advice.",
-        "answer him, because there is no case brief today",
-        "copy a page and hand it to him as the answer",
-        "tell him to waive counsel"
+        "stop. The next heading is not today's work.",
+        "keep going until the chapter ends",
+        "brief a case from a headline",
+        "skip the section and write the chapter title"
       ],
       "answer": 0,
-      "topic": "upl",
+      "topic": "sources",
       "level": 3
     },
     {
@@ -481,8 +481,8 @@
       "choices": [
         "has not started. Name the recipient before you ask for anything.",
         "is finished if the date is at the top",
-        "is legal advice",
-        "is a case brief"
+        "is a case brief",
+        "is a statute"
       ],
       "answer": 0,
       "topic": "office",
@@ -491,22 +491,22 @@
     {
       "stem": "A bill in this office is",
       "choices": [
-        "a record of work. It is not a guess and it is not advice.",
+        "a record of work and time. It is not a guess.",
         "the holding of today's case",
-        "permission to tell the client what to file",
-        "the jury's verdict"
+        "the jury's verdict",
+        "a charging document"
       ],
       "answer": 0,
       "topic": "office",
       "level": 3
     },
     {
-      "stem": "You were told to stop at the end of one section. The next heading",
+      "stem": "The heading after the section you were assigned",
       "choices": [
         "is not today's work",
         "is required if it looks important",
         "is the brief",
-        "is advice"
+        "is the holding"
       ],
       "answer": 0,
       "topic": "sources",
@@ -517,8 +517,8 @@
       "choices": [
         "provide counsel, because jail is on the table",
         "refuse counsel, because the case is civil",
-        "let the student advise the plea",
-        "send the case to a school suspension hearing"
+        "treat it as a school suspension",
+        "wait until a jury is seated"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -540,7 +540,7 @@
       "stem": "Gideon still means",
       "choices": [
         "a lawyer at the felony trial if the accused cannot pay",
-        "a lawyer for every hallway question",
+        "a lawyer for every conversation in the hall",
         "no lawyer until after the verdict",
         "a lawyer only in federal court"
       ],
@@ -565,7 +565,7 @@
       "choices": [
         "Goss",
         "DeWolfe",
-        "a statute the student may enforce by advice",
+        "Rutherford",
         "the jury"
       ],
       "answer": 0,
@@ -578,7 +578,7 @@
         "Maryland's due-process sentence",
         "the Sixth Amendment's exact words",
         "a form the commissioner signs",
-        "permission to advise"
+        "the charging document"
       ],
       "answer": 0,
       "topic": "sources",
@@ -602,7 +602,7 @@
         "reviews the law. It is not a second trial.",
         "sets bail at 3 a.m.",
         "writes the Code",
-        "gives the client advice through you"
+        "hears the witnesses again from the start"
       ],
       "answer": 0,
       "topic": "courts",
@@ -615,8 +615,8 @@
       "choices": [
         "the right against forced self-incrimination",
         "that every police question needs a warrant",
-        "that a student may tell the client to talk",
-        "that silence is always guilt"
+        "that silence is always guilt",
+        "that a name on the sidewalk is a confession"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -627,8 +627,8 @@
       "choices": [
         "state-furnished counsel",
         "no counsel, because the caption says civil",
-        "advice from the student on whether to pay",
-        "a jury in District Court"
+        "a jury in District Court",
+        "a school hearing"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -639,7 +639,7 @@
       "choices": [
         "a lawyer at that appearance if he cannot pay",
         "a lawyer only if the trial is a felony",
-        "you to tell him to waive it",
+        "a jury in that room",
         "a school hearing"
       ],
       "answer": 0,
@@ -647,19 +647,7 @@
       "level": 3
     },
     {
-      "stem": "He asks what to do about the bail. The memo ends",
-      "choices": [
-        "I will give your question to the partner.",
-        "Post it.",
-        "Do not post it.",
-        "Waive counsel. I checked."
-      ],
-      "answer": 0,
-      "topic": "upl",
-      "level": 3
-    },
-    {
-      "stem": "Gideon, DeWolfe, and Rutherford are three doors. The felony trial is",
+      "stem": "Three counsel doors. The felony trial is",
       "choices": [
         "Gideon",
         "DeWolfe",
@@ -671,12 +659,12 @@
       "level": 3
     },
     {
-      "stem": "The commissioner is",
+      "stem": "Gideon, DeWolfe, and Rutherford. The commissioner is",
       "choices": [
         "DeWolfe's door",
         "Gideon's jury",
         "a statute",
-        "advice"
+        "Goss"
       ],
       "answer": 0,
       "topic": "courts",
@@ -724,7 +712,7 @@
         "No jury.",
         "The court of last resort.",
         "Where the General Assembly sits.",
-        "Where you give the plea."
+        "Where felonies are tried to a jury."
       ],
       "answer": 0,
       "topic": "courts",
@@ -736,7 +724,7 @@
         "it is not in the file. You do not invent it.",
         "it is close enough",
         "the client probably did it",
-        "advice: plead"
+        "the missing element is whatever the story needs"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -747,12 +735,24 @@
       "choices": [
         "the opinion",
         "the client's wish",
-        "your last line",
+        "the caption",
         "the hallway version"
       ],
       "answer": 0,
       "topic": "sources",
       "level": 3
+    },
+    {
+      "stem": "A charge is",
+      "choices": [
+        "an accusation, not a conviction",
+        "the verdict",
+        "the sentence",
+        "proof of every element by itself"
+      ],
+      "answer": 0,
+      "topic": "criminal",
+      "level": 2
     }
   ],
   "2026-10-09": [
@@ -762,7 +762,7 @@
         "the warnings before the prosecution uses the statement",
         "the warnings for every question any person asks",
         "no warnings, because the Fifth Amendment was repealed",
-        "a student to tell the client to talk"
+        "a warrant before anyone speaks"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -781,27 +781,27 @@
       "level": 3
     },
     {
-      "stem": "The warnings are not a favor. They protect",
+      "stem": "The warnings protect",
       "choices": [
         "the right against forced self-incrimination",
         "the right to a jury in District Court",
-        "the student's right to advise",
-        "a school suspension"
+        "a school suspension",
+        "a commissioner appearance"
       ],
       "answer": 0,
       "topic": "criminal",
       "level": 3
     },
     {
-      "stem": "The client asks, 'Should I talk to the detective tonight?' You",
+      "stem": "Miranda's warnings are",
       "choices": [
-        "give that question to the partner",
-        "say yes, cooperation helps",
-        "say no, always stay silent",
-        "read the warning and tell him which to pick"
+        "a constitutional rule for custodial interrogation",
+        "a statute passed by the General Assembly last year",
+        "required for every question any person asks",
+        "the same hearing as the commissioner"
       ],
       "answer": 0,
-      "topic": "upl",
+      "topic": "criminal",
       "level": 3
     },
     {
@@ -821,8 +821,8 @@
       "choices": [
         "DeWolfe, under Article 24",
         "Miranda, because bail is a warning",
-        "Goss, because the school was involved",
-        "advice you may give"
+        "Goss, because a school was nearby",
+        "Gideon, because every stop is a felony trial"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -844,9 +844,9 @@
       "stem": "Felony trial, cannot pay, state refuses a lawyer. The case is",
       "choices": [
         "Gideon",
-        "today's unread Maryland case",
         "a bill for office time",
-        "a caption"
+        "a caption",
+        "a school suspension"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -858,7 +858,7 @@
         "may not be used",
         "come in, because he spoke",
         "come in, if the story is true",
-        "are advice"
+        "are an element of the crime"
       ],
       "answer": 0,
       "topic": "criminal",
@@ -869,8 +869,8 @@
       "choices": [
         "Maryland's due-process sentence",
         "the warnings script",
-        "permission to advise",
-        "the jury"
+        "the jury",
+        "the charging document"
       ],
       "answer": 0,
       "topic": "sources",
@@ -879,10 +879,10 @@
     {
       "stem": "You brief by",
       "choices": [
-        "citation, facts, issue, holding. Then you stop. You do not advise.",
+        "citation, facts, issue, holding. Then you stop.",
         "the holding only, from memory",
-        "telling the client which fact to hide",
-        "copying a news story over the opinion"
+        "a news story in place of the opinion",
+        "whatever the caption seems to say"
       ],
       "answer": 0,
       "topic": "sources",
@@ -893,8 +893,8 @@
       "choices": [
         "write that it is not on the file",
         "add it so the brief is stronger",
-        "ask the client to agree it happened",
-        "treat it as an element"
+        "treat it as an element",
+        "treat it as the holding"
       ],
       "answer": 0,
       "topic": "file",

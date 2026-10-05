@@ -158,8 +158,8 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     {title:"A memo is a short paper", mins:"board brief",
      file:"/videos/papers.mp4",
      say:[
-       "A memo is a short paper with numbered steps. Subject line first. Last line is never advice.",
-       "You dump the facts. You label the papers. You send every advice question to the partner.",
+       "A memo is a short paper with numbered steps. Subject line first. ",
+       "You dump the facts. You label the papers.",
        "If it would not survive a stranger, it is not done."
      ],
      ask:"What is the last line of today's memo not allowed to be?"},
@@ -247,7 +247,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     if(slides.some(function(s){ return s && s.id==="how-click"; })) return slides;
     var how=[
       {id:"how-click", title:"OFFICE · where you tap", shots:["howto/office-mail.svg"],
-        body:["1  LAST, FIRST — no PIN on Office.","2  Ice-blue OPEN FILE on the left.","3  SUBJECT LINE on the right. Copy it. Do not invent a jacket tab.","4  MEMO. Numbered steps. Last line is never advice.","5  SEND FIRST DRAFT. Answer the partner’s questions. Then FILE FINAL."],
+        body:["1  LAST, FIRST — no PIN on Office.","2  Ice-blue OPEN FILE on the left.","3  SUBJECT LINE on the right. Copy it. Do not invent a jacket tab.","4  MEMO. Numbered steps. ","5  SEND FIRST DRAFT. Answer the partner’s questions. Then FILE FINAL."],
         ask:"Point at OPEN FILE on this picture."},
       {id:"how-file", title:"OPEN FILE · the packet", shots:["howto/office-file.svg"],
         body:["This is the file. Facts and papers live here.","Copy the subject line. Write the memo from what you see, not from a folder cover."],
@@ -344,7 +344,6 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       lines.push(String(s));
     });
     lines.push("");
-    lines.push("Last line is never advice.");
     return lines.join("\n");
   }
   function printPackets(force){
@@ -458,7 +457,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       "<p><b>This year.</b> Introduction to Legal Studies. Careers, the law office, courts, constitutional rights, civil and criminal law, pretrial, trials, and a mock trial. ILS, LS-1, and LS-2. The text is NALS.</p>"+
       "<p><b>Year 2.</b> Criminal Law. The crimes, search and seizure, arrests, Miranda, trial, and sentencing.</p>"+
       "<p><b>Year 3.</b> Civil Law, then the NALS Accredited Legal Professional exam.</p>"+
-      "<p>Students work a real file. They do not give the client legal advice.</p>"+
+      "<p>Students work a real file. Each day is one client, one paper, and one Maryland problem.</p>"+
       "</div>"
     );
   }
@@ -532,13 +531,13 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
         "<p class='cite'>Class writes. No cold call. No new lecture. No case brief.</p>"+
         "<p class='body'>Write from today's sitting only. Cornell notes. Stop where the section stops.</p>"+
         (qs||"<p class='ask'>What did the section actually say?</p>")+
-        "<p class='cite'>Last line is never advice.</p>";
+        "<p class='cite'></p>";
     }
     return "<h1>THEY DO</h1>"+
       "<p class='cite'>Class writes. No cold call. OFFICE."+(f.client?(" File: "+esc(f.client)+"."):"")+"</p>"+
       (memo.subject?("<p class='ask'>"+esc(memo.subject)+"</p>"):"")+
       "<div class='body'>"+(steps||"<p>Write the memo from the brief and today's paper. Numbered steps.</p>")+"</div>"+
-      "<p class='cite'>Same and different stay on the paper. Do not add facts. Do not draft a motion. Last line is never advice.</p>";
+      "<p class='cite'>Same and different stay on the paper. Do not add facts. Do not draft a motion. </p>";
   }
   function modelHtml(){
     var db=(kit&&kit.dayBrief)||{};
@@ -572,7 +571,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       var memo=(kit&&kit.memo)||{};
       (memo.steps||[]).slice(0,4).forEach(function(s){ lines.push(String(s)); });
     }
-    lines.push("Then you write. Last line is never advice.");
+    lines.push("Then you write. ");
     return "<h1>I MODEL</h1><p class='cite'>You model it once. Cold call is still open. They do not write yet.</p>"+
       lines.map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join("");
   }
@@ -585,7 +584,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       : ("<h1>THEY LEAD</h1><p class='cite'>"+esc(window.__leadNote||"Waiting on the roll. Only a student marked present leads.")+"</p>");
     var memo=(kit&&kit.memo)||{};
     var steps=(memo.steps||[]).slice(0,5).map(function(s,i){ return "<p class='body'>"+(i+1)+". "+esc(s)+"</p>"; }).join("");
-    return head+paras+steps+"<p class='cite'>30–60. The lead runs the memo on this board. You guide from OFFICE. The class follows. No cold call. Last line is never advice.</p>";
+    return head+paras+steps+"<p class='cite'>30–60. The lead runs the memo on this board. You guide from OFFICE. The class follows. No cold call. </p>";
   }
   function titleBit(s){
     return String(s||"").toLowerCase().replace(/(^|[\s\-])([a-z])/g, function(_, a, b){ return a+b.toUpperCase(); })
@@ -638,7 +637,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
   function readerScript(spoken){
     var db=(kit&&kit.dayBrief)||{};
     var f=(kit&&kit.file)||{};
-    var lines=["I am "+spoken+".", "I read this. Then we write. I do not give advice."];
+    var lines=["I am "+spoken+".", "I read this. Then we write."];
     var wed=db.kind==="nals"||(window.LawKit&&LawKit.isWed&&LawKit.isWed());
     if(wed){
       var r=(kit&&kit.reader)||{};
@@ -676,7 +675,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       if(assign.task) lines.push("Assignment. "+assign.task);
       (assign.steps||[]).slice(0,5).forEach(function(s){ lines.push(String(s)); });
     }
-    lines.push("Last line is never advice. A question about what the client should do goes to the partner.");
+    lines.push("");
     return lines.join("\n");
   }
   function teacherReadScript(){
@@ -708,7 +707,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       if(memo.task) lines.push(String(memo.task));
       (memo.steps||[]).slice(0,4).forEach(function(s){ lines.push(String(s)); });
     }
-    lines.push("Last line is never advice.");
+    lines.push("");
     return lines.join("\n");
   }
   function teacherWrapScript(){
@@ -729,7 +728,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       if(f.client) lines.push("The file is "+f.client+(f.chargeLine?(". "+f.chargeLine):"")+".");
       lines.push("Same and different stay on the paper. Do not add facts. Do not draft a motion.");
     }
-    lines.push("Last line is never advice. Then the bell.");
+    lines.push("Then the bell.");
     return lines.join("\n");
   }
   function postTape(slot, title, name, script, lock){
@@ -802,7 +801,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       if(!facts.length && memo.body) facts=[String(memo.body)];
       blocks=[
         {h:"THE STORY", t:facts.join(" ")},
-        {h:"THE LEGAL PROBLEM", t:"Name the door. Name the right. Do not tell the client what to do."}
+        {h:"THE LEGAL PROBLEM", t:"Name the door. Name the right. "}
       ];
     }
     var body=blocks.map(function(b){
@@ -811,7 +810,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     return "<h1>"+esc(name)+"</h1>"+
       "<p class='cite'>15–30. The lecture. Listen. Do not write yet.</p>"+
       body+
-      "<p class='cite'>The letter is the assignment. Last line is never advice.</p>";
+      "<p class='cite'>The letter is the assignment. </p>";
   }
   function socraticBank(){
     var out=[];
@@ -824,7 +823,6 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     (f.facts||[]).slice(0,2).forEach(function(fact){ out.push("Is this on the file? Yes or no. "+fact); });
     var memo=(kit&&kit.memo)||{};
     (memo.steps||[]).slice(0,3).forEach(function(s){ out.push("Where is the memo on this step? "+s); });
-    out.push("What is the last line of the memo never allowed to be?");
     return out.length?out:["What did today's paper actually say?"];
   }
   function socCall(){
@@ -1103,7 +1101,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       lines.push("Stop. Wednesday is the textbook. There is no case brief.");
       lines.push("You read " + (r.source || "today's section") + (r.pages && String(r.source || "").indexOf(String(r.pages)) < 0 ? (" " + r.pages) : "") + ". Stop where it stops.");
       lines.push("What you wrote comes from that sitting only.");
-      lines.push("Last line is never advice.");
+      lines.push("");
     } else {
       var c=db.case||{};
       var f=kit.file||{};
@@ -1111,7 +1109,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       if(c.point) lines.push(c.point);
       if(db.statute&&db.statute.cite && db.role!=="statute") lines.push("The statute next to it is "+db.statute.cite+".");
       if(f.client) lines.push("The file is "+f.client+(f.number?(" "+f.number):"")+(f.chargeLine?(". "+f.chargeLine):"")+".");
-      lines.push("Same and different stay on the paper. Do not add facts. Do not draft a motion. Last line is never advice.");
+      lines.push("Same and different stay on the paper. Do not add facts. Do not draft a motion. ");
     }
     return "<h1>WRAP</h1><p class='cite'>Teacher. Last 5 minutes. Say these. Then the bell.</p>"+
       lines.map(function(t,i){ return "<p class='ask'>"+(i+1)+". "+esc(t)+"</p>"; }).join("");
