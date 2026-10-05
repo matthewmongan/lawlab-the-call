@@ -19,6 +19,11 @@ def found(name):
 def lock_kit(path):
     kit = json.loads(path.read_text())
     kit["file"] = PAY["file"]
+    kit["file"]["lecture"] = [
+        {"h": "THE STORY", "t": "Andre Whitfield was arrested in Baltimore City on Saturday night. Before dawn he stood in front of a District Court commissioner. That room is the first stop. It is not the trial. There is no jury there. He asked for a lawyer. He could not pay. No lawyer stood with him. The commissioner set bail. The State's side can be heard at that stop. Andre's side had nobody."},
+        {"h": "THIS MORNING", "t": "He is in this office. He wants to know whether that was allowed, and what he should do next. You do not answer the second question. What he should do goes to the partner."},
+        {"h": "THE LEGAL PROBLEM", "t": "Gideon v. Wainwright already answered a later question. In a felony case, if you cannot pay, the state has to give you a lawyer at the trial. Andre's problem is earlier than the trial. Bail was set while he had no lawyer. The Maryland text on that problem is Article 24, the due-process sentence. The case that reads Article 24 onto this door is the one in the letter. Open it in the library. Brief it: citation, facts, issue, holding. Do not tell him to waive a lawyer, post the bail, or plead."},
+    ]
     kit["memo"] = PAY["memo"]
     plan = kit.setdefault("plan", {})
     plan["title"] = "Brief DeWolfe. Andre Whitfield at the commissioner."
@@ -124,7 +129,7 @@ def patch_kitjs(path):
 
 def install_lecture():
     src = Path("/tmp/lecture-monday.html")
-    if not src.is_file() or "function callHtml" not in src.read_text() or 'ph.id==="mail") printPackets(false)' not in src.read_text():
+    if not src.is_file() or "function callHtml" not in src.read_text() or 'ph.id==="mail") printPackets(false)' not in src.read_text() or "THE LEGAL PROBLEM" not in src.read_text():
         print("LECTURE_SRC_BAD")
         return
     raw = src.read_bytes()
@@ -137,6 +142,26 @@ def install_lecture():
             continue
         p.write_bytes(raw)
         print("lecture", p)
+
+def install_quiz():
+    src = Path("/tmp/quiz-pick.js")
+    if not src.is_file() or "2026-10-05" not in src.read_text() or "DeWolfe holds" not in src.read_text():
+        print("QUIZ_SRC_BAD")
+        return
+    raw = src.read_bytes()
+    targets = [p for p in found("quiz-pick.js") if p.parent.name == "js"]
+    if not targets:
+        targets = [ROOT / "js" / "quiz-pick.js"]
+    for p in targets:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(raw)
+        print("quiz", p)
+    for p in found("pocket.html") + found("lab.html") + found("quiz-dash.html"):
+        t = p.read_text()
+        n = t.replace("quiz-pick.js?v=22", "quiz-pick.js?v=23").replace("quiz-pick.js?v=20", "quiz-pick.js?v=23")
+        if n != t:
+            p.write_text(n)
+            print("cache", p)
 
 def main():
     kits = [p for p in found("ILS-2026-10-05.json") + found("LS-2026-10-05.json")]
@@ -161,6 +186,7 @@ def main():
         if p.parent.name == "js":
             patch_kitjs(p)
     install_lecture()
+    install_quiz()
     print("DONE")
 
 if __name__ == "__main__":

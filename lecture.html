@@ -796,17 +796,21 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
     var f=(kit&&kit.file)||{};
     var memo=(kit&&kit.memo)||{};
     var name=f.client||"TODAY'S CLIENT";
-    var facts=(f.facts||[]).slice(0,4);
-    if(!facts.length && memo.body) facts=[String(memo.body).slice(0,480)];
-    if(!facts.length && kit&&kit.reader){
-      if(kit.reader.title) facts.push(String(kit.reader.title));
-      if(kit.reader.excerpt) facts.push(String(kit.reader.excerpt).slice(0,500));
+    var blocks=f.lecture||[];
+    if(!blocks.length){
+      var facts=(f.facts||[]).slice(0,4);
+      if(!facts.length && memo.body) facts=[String(memo.body)];
+      blocks=[
+        {h:"THE STORY", t:facts.join(" ")},
+        {h:"THE LEGAL PROBLEM", t:"Name the door. Name the right. Do not tell the client what to do."}
+      ];
     }
-    if(!facts.length) facts=["The client tells only the facts on the file. Do not add any."];
-    return "<h1>YOU'VE GOT MAIL</h1>"+
-      "<p class='cite'>15–30. The client tells the story. Listen. Do not write yet.</p>"+
-      "<p class='ask'>"+esc(name)+"</p>"+
-      facts.map(function(t){ return "<p class='body'>"+esc(t)+"</p>"; }).join("")+
+    var body=blocks.map(function(b){
+      return "<p class='ask'>"+esc(b.h||"")+"</p><p class='body'>"+esc(b.t||"")+"</p>";
+    }).join("");
+    return "<h1>"+esc(name)+"</h1>"+
+      "<p class='cite'>15–30. The lecture. Listen. Do not write yet.</p>"+
+      body+
       "<p class='cite'>The letter is the assignment. Last line is never advice.</p>";
   }
   function socraticBank(){
@@ -1274,7 +1278,7 @@ body.conf .ask{font-size:clamp(28px,3.4vw,48px);color:var(--gold)}
       var court = window.LawGames && ((LawGames.sitting && LawGames.sitting(course==="LS"?"LS":"ILS", iso)) || (LawGames.courtDay && !LawGames.sitting && LawGames.courtDay(course==="LS"?"LS":"ILS", iso)));
       var story=clientStoryHtml();
       if(court) story=story.replace("<h1>YOU'VE GOT MAIL</h1>","<h1>ALL RISE</h1>");
-      setStage(story, clientFace((kit.file||{}).client) || pocketBox());
+      setStage(story, clientFace((kit.file||{}).client) || pocketBox(), true);
       return;
     }
     if(!manual && ph.id==="huddle"){
